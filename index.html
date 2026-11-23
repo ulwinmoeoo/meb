@@ -40,6 +40,7 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc2);outl
 
 <div class="rate"><div><span id="t_r1"></span><b id="r1">–</b></div><div><span id="t_r2"></span><b id="r2">–</b></div></div>
 
+<p id="minnote" style="color:var(--mut);font-size:.9rem;margin:-6px 0 14px"></p>
 <section>
 <h2 id="t_new"></h2>
 <label id="t_dir"></label>
@@ -73,12 +74,12 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const T = {
- my:{title:'ဘတ် ↔ ကျပ် ငွေလွှဲ',r1:'THB 1 လွှဲရင် ရမယ့်ငွေ',r2:'THB 1 ရဖို့ လိုတဲ့ကျပ်',new:'ငွေလွှဲမှု အသစ်',dir:'လွှဲမယ့်ဘက်',amt:'ပေးပို့မယ့် ပမာဏ',
+ my:{title:'ဘတ် ↔ ကျပ် ငွေလွှဲ',r1:'ဘတ်ပေးရင် (ကျပ် ၁ သိန်းလျှင် ဘတ်)',r2:'ဘတ်ပြန်ယူရင် (ကျပ် ၁ သိန်းလျှင် ဘတ်)',min:'ကျပ်',minnote:'အနည်းဆုံး ကျပ်',border:'နယ်စပ်ပေါက်ဈေး',minerr:'အနည်းဆုံး ကျပ် {n} ကစပြီး လုပ်ပေးပါမယ်',new:'ငွေလွှဲမှု အသစ်',dir:'လွှဲမယ့်ဘက်',amt:'ပေးပို့မယ့် ပမာဏ',
   name:'သင့်အမည်',phone:'ဖုန်းနံပါတ်',method:'လက်ခံမယ့်နည်းလမ်း',acc:'လက်ခံမယ့် အကောင့်/နံပါတ်',slip:'ငွေလွှဲပြီးကြောင်း slip ဓာတ်ပုံ',submit:'Order တင်မယ်',
   check:'Order အခြေအနေစစ်ရန်',checkbtn:'စစ်မယ်',get:'သင်ရမယ့်ငွေ',payto:'ဒီအကောင့်ကို အရင်လွှဲပါ',
   fill:'အချက်အလက်အားလုံး ဖြည့်ပြီး slip တင်ပါ',ok:'Order တင်ပြီးပါပြီ။ သင့် Order နံပါတ်',keep:'(မှတ်ထားပါ)',
   pending:'စောင့်ဆိုင်းနေသည်',done:'ပြီးစီးပါပြီ',rejected:'ပယ်ချခံရသည်',nf:'Order မတွေ့ပါ',fail:'မအောင်မြင်ပါ၊ ပြန်ကြိုးစားပါ'},
- en:{title:'THB ↔ MMK Transfer',r1:'Receive per THB 1 sent',r2:'MMK needed per THB 1',new:'New transfer',dir:'Direction',amt:'Amount to send',
+ en:{title:'THB ↔ MMK Transfer',r1:'You give THB (THB per MMK 100,000)',r2:'You take THB (THB per MMK 100,000)',min:'MMK',minnote:'Minimum',border:'Border rate',minerr:'Minimum is MMK {n}',new:'New transfer',dir:'Direction',amt:'Amount to send',
   name:'Your name',phone:'Phone number',method:'Receive via',acc:'Receiving account / number',slip:'Payment slip photo',submit:'Place order',
   check:'Check order status',checkbtn:'Check',get:'You receive',payto:'Send your money to this account first',
   fill:'Fill in everything and attach the slip',ok:'Order placed. Your order number',keep:'(keep it)',
@@ -92,32 +93,35 @@ const fmt = n => Number(n).toLocaleString('en',{maximumFractionDigits:2});
 function setLang(l){L=l;try{localStorage.setItem('lang',l)}catch(e){}
  document.documentElement.lang=l;const t=T[l];
  [['title'],['r1'],['r2'],['new'],['dir'],['amt'],['name'],['phone'],['method'],['acc'],['slip'],['check']].forEach(([k])=>{const e=$('t_'+(k==='r1'||k==='r2'?k:k));if(e)e.textContent=t[k]});
- $('submit').textContent=t.submit;$('t_checkbtn').textContent=t.checkbtn;calc();}
+ $('submit').textContent=t.submit;$('t_checkbtn').textContent=t.checkbtn;note();calc();}
 
+function note(){if(R)$('minnote').textContent=`${T[L].border}: ${fmt(R.border_rate)} · ${T[L].minnote}: ${fmt(R.min_mmk)} ${T[L].min}`}
 function fillMethods(){$('method').innerHTML=M[$('dir').value].map(m=>`<option>${m}</option>`).join('')}
 
 function calc(){
  if(!R)return;const d=$('dir').value,a=parseFloat($('amt').value)||0;
- const get=d==='THB_MMK'?a*R.thb_to_mmk:a/R.mmk_to_thb;
+ const get=d==='THB_MMK'?Math.round(a/R.give_rate*100000):Math.round(a/100000*R.take_rate*100)/100;
  $('calc').textContent=a>0?`${T[L].get}: ${fmt(get)} ${d==='THB_MMK'?'MMK':'THB'}`:'';
  $('pay').textContent=`${T[L].payto}\n${d==='THB_MMK'?R.pay_thb:R.pay_mmk}`;
  return get;}
 
 async function load(){
  const {data}=await db.from('rates').select('*').eq('id',1).single();
- if(data){R=data;$('r1').textContent=fmt(R.thb_to_mmk)+' MMK';$('r2').textContent=fmt(R.mmk_to_thb)+' MMK';calc();}}
+ if(data){R=data;$('r1').textContent=fmt(R.give_rate)+' THB';$('r2').textContent=fmt(R.take_rate)+' THB';note();calc();}}
 
 async function submitOrder(){
  const t=T[L],d=$('dir').value,a=parseFloat($('amt').value),f=$('slip').files[0];
  const v=['name','phone','acc'].map(i=>$(i).value.trim());
  if(!(a>0)||v.some(x=>!x)||!f){$('out').innerHTML=`<div class="msg err">${t.fill}</div>`;return}
+ const mmk=d==='THB_MMK'?calc():a;
+ if(mmk<R.min_mmk){$('out').innerHTML=`<div class="msg err">${t.minerr.replace('{n}',fmt(R.min_mmk))}</div>`;return}
  $('submit').disabled=true;
  const no='TM-'+Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b%32]).join('');
  const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
  const path=`${no}.${ext}`;
  const up=await db.storage.from('slips').upload(path,f,{contentType:f.type});
  if(up.error){$('out').innerHTML=`<div class="msg err">${t.fail}</div>`;$('submit').disabled=false;return}
- const rate=d==='THB_MMK'?R.thb_to_mmk:R.mmk_to_thb;
+ const rate=d==='THB_MMK'?R.give_rate:R.take_rate;
  const {error}=await db.from('orders').insert({order_no:no,direction:d,send_amount:a,receive_amount:calc(),rate,
    name:v[0],phone:v[1],receive_method:$('method').value,receive_account:v[2],slip_path:path});
  $('submit').disabled=false;
