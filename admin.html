@@ -32,10 +32,10 @@ button.no{background:var(--bad);color:#fff}
 <body>
 <main>
 <section id="login">
- <h2>Admin login</h2>
+ <h2>Admin login <small style="color:var(--mut)">v3</small></h2>
  <label>Email</label><input id="em" type="email" autocomplete="username">
  <label>Password</label><input id="pw" type="password" autocomplete="current-password">
- <p><button onclick="login()">Login</button></p><div id="lerr" class="err"></div>
+ <p><button onclick="login()">Login</button> <button class="alt" onclick="diag()">Test connection</button></p><div id="lerr" class="err"></div><pre id="dg" style="white-space:pre-wrap;font-size:.8rem"></pre>
 </section>
 
 <div id="app" class="hide">
@@ -72,8 +72,15 @@ const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>
 const label = {pending:'စောင့်ဆိုင်း',done:'ပြီးစီး',rejected:'ပယ်ချ'};
 
 async function login(){
- const {error}=await db.auth.signInWithPassword({email:$('em').value,password:$('pw').value});
+ let error;try{({error}=await db.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value}))}catch(e){error=e}
  $('lerr').textContent=error?error.message:'';if(!error)start();}
+async function diag(){
+ const out=[];const log=t=>{out.push(t);$('dg').textContent=out.join('\n')};
+ log('URL: '+SUPABASE_URL);log('key: '+SUPABASE_ANON_KEY.slice(0,14)+'… ('+SUPABASE_ANON_KEY.length+' chars)');log('online: '+navigator.onLine);
+ for(const path of ['/auth/v1/health','/rest/v1/rates?select=id']){
+  try{const r=await fetch(SUPABASE_URL+path,{headers:{apikey:SUPABASE_ANON_KEY}});log(path+' -> HTTP '+r.status)}
+  catch(e){log(path+' -> '+e.name+': '+e.message)}}
+}
 async function logout(){await db.auth.signOut();location.reload()}
 async function start(){
  const {data}=await db.auth.getSession();if(!data.session)return;
