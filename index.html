@@ -65,6 +65,7 @@ input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc2);outl
 <button class="btn" onclick="checkOrder()" id="t_checkbtn"></button>
 <div id="status"></div>
 </section>
+<p style="text-align:center;color:var(--mut);font-size:.8rem">v4</p>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -112,21 +113,25 @@ async function load(){
 async function submitOrder(){
  const t=T[L],d=$('dir').value,a=parseFloat($('amt').value),f=$('slip').files[0];
  const v=['name','phone','acc'].map(i=>$(i).value.trim());
- if(!(a>0)||v.some(x=>!x)||!f){$('out').innerHTML=`<div class="msg err">${t.fill}</div>`;return}
+ const show=(txt,cls)=>{const m=document.createElement('div');m.className='msg '+(cls||'');m.textContent=txt;$('out').replaceChildren(m)};
+ if(!R){show('Rate မရသေးပါ၊ page ကို refresh လုပ်ပါ','err');return}
+ if(!(a>0)||v.some(x=>!x)||!f){show(t.fill,'err');return}
  const mmk=d==='THB_MMK'?calc():a;
- if(mmk<R.min_mmk){$('out').innerHTML=`<div class="msg err">${t.minerr.replace('{n}',fmt(R.min_mmk))}</div>`;return}
+ if(mmk<R.min_mmk){show(t.minerr.replace('{n}',fmt(R.min_mmk)),'err');return}
  $('submit').disabled=true;
- const no='TM-'+Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b%32]).join('');
- const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
- const path=`${no}.${ext}`;
- const up=await db.storage.from('slips').upload(path,f,{contentType:f.type});
- if(up.error){$('out').innerHTML=`<div class="msg err">${t.fail}</div>`;$('submit').disabled=false;return}
- const rate=d==='THB_MMK'?R.give_rate:R.take_rate;
- const {error}=await db.from('orders').insert({order_no:no,direction:d,send_amount:a,receive_amount:calc(),rate,
-   name:v[0],phone:v[1],receive_method:$('method').value,receive_account:v[2],slip_path:path});
- $('submit').disabled=false;
- if(error){$('out').innerHTML=`<div class="msg err">${t.fail}</div>`;return}
- $('out').innerHTML=`<div class="msg">${t.ok}: <b>${no}</b> ${t.keep}</div>`;$('ono').value=no;
+ try{
+  const no='TM-'+Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b%32]).join('');
+  const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
+  const path=`${no}.${ext}`;
+  const up=await db.storage.from('slips').upload(path,f,{contentType:f.type||'image/jpeg'});
+  if(up.error)throw new Error('slip: '+up.error.message);
+  const rate=d==='THB_MMK'?R.give_rate:R.take_rate;
+  const {error}=await db.from('orders').insert({order_no:no,direction:d,send_amount:a,receive_amount:calc(),rate,
+    name:v[0],phone:v[1],receive_method:$('method').value,receive_account:v[2],slip_path:path});
+  if(error)throw new Error('order: '+error.message);
+  show(`${t.ok}: ${no} ${t.keep}`);$('ono').value=no;
+ }catch(e){show(`${t.fail} (${e.message})`,'err')}
+ finally{$('submit').disabled=false}
 }
 
 async function checkOrder(){

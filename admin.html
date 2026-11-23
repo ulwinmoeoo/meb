@@ -32,7 +32,7 @@ button.no{background:var(--bad);color:#fff}
 <body>
 <main>
 <section id="login">
- <h2>Admin login <small style="color:var(--mut)">v3</small></h2>
+ <h2>Admin login <small style="color:var(--mut)">v4</small></h2>
  <label>Email</label><input id="em" type="email" autocomplete="username">
  <label>Password</label><input id="pw" type="password" autocomplete="current-password">
  <p><button onclick="login()">Login</button> <button class="alt" onclick="diag()">Test connection</button></p><div id="lerr" class="err"></div><pre id="dg" style="white-space:pre-wrap;font-size:.8rem"></pre>
@@ -99,6 +99,54 @@ async function loadRates(){
  const {data}=await db.from('rates').select('*').eq('id',1).single();if(!data)return;
  $('r_a').value=data.give_rate;$('r_b').value=data.take_rate;$('r_e').value=data.border_rate;$('r_f').value=data.min_mmk;
  $('r_c').value=data.pay_thb;$('r_d').value=data.pay_mmk;}
+async function saveRates(){
+ $('rmsg').textContent='...';
+ const {data:ses}=await db.auth.getSession();
+ if(!ses.session){alert('Login သက်တမ်းကုန်သွားပါပြီ၊ ပြန် login ဝင်ပါ');return}
+ const {data,error}=await db.from('rates').update({give_rate:+$('r_a').value,take_rate:+$('r_b').value,border_rate:+$('r_e').value,min_mmk:+$('r_f').value,
+  pay_thb:$('r_c').value,pay_mmk:$('r_d').value,updated_at:new Date().toISOString()}).eq('id',1).select();
+ const msg=error?'မအောင်မြင်: '+error.message:(!data||!data.length?'မအောင်မြင်: ပြင်ခွင့်မရှိပါ (0 rows)':'သိမ်းပြီးပါပြီ ✓');
+ $('rmsg').textContent=msg;alert(msg);}
+
+async function loadSummary(){
+ const s=new Date();s.setHours(0,0,0,0);
+ const {data}=await db.from('orders').select('direction,send_amount,receive_amount,status').gte('created_at',s.toISOString());
+ const all=data||[],d=all.filter(o=>o.status==='done');
+ const sum=(a,dir,k)=>a.filter(o=>o.direction===dir).reduce((t,o)=>t+Number(o[k]),0);
+ $('sum').innerHTML=[
+  ['Order စုစုပေါင်း',all.length],['စောင့်ဆိုင်း',all.filter(o=>o.status==='pending').length],['ပြီးစီး',d.length],
+  ['လက်ခံရ THB',fmt(sum(d,'THB_MMK','send_amount'))],['ပေးချေ MMK',fmt(sum(d,'THB_MMK','receive_amount'))],
+  ['လက်ခံရ MMK',fmt(sum(d,'MMK_THB','send_amount'))],['ပေးချေ THB',fmt(sum(d,'MMK_THB','receive_amount'))]
+ ].map(([k,v])=>`<div class="stat"><span>${k}</span><b>${v}</b></div>`).join('');}
+
+async function loadOrders(){
+ let q=db.from('orders').select('*').order('created_at',{ascending:false}).limit(100);
+ if($('flt').value!=='all')q=q.eq('status',$('flt').value);
+ const {data,error}=await q;
+ if(error){$('list').textContent=error.message;return}
+ $('list').innerHTML=data.length?'':'<p>Order မရှိပါ</p>';
+ for(const o of data){
+  const [a,b]=o.direction==='THB_MMK'?['THB','MMK']:['MMK','THB'];
+  const el=document.createElement('div');el.className='card order';
+  el.innerHTML=`<div class="row" style="justify-content:space-between"><b>${esc(o.order_no)}</b><span class="badge ${o.status}">${label[o.status]}</span></div>
+   <div>${fmt(o.send_amount)} ${a} → <b>${fmt(o.receive_amount)} ${b}</b> (rate ${fmt(o.rate)})</div>
+   <div>${esc(o.name)} · ${esc(o.phone)}</div>
+   <div>လက်ခံ: ${esc(o.receive_method)} – ${esc(o.receive_account)}</div>
+   <div class="slip"></div>
+   <label>Note (customer ကို ပြမယ်)</label><input class="note" value="${esc(o.note)}">
+   <div class="row" style="margin-top:8px"><button class="alt" data-a="slip">Slip ကြည့်</button>
+    <button data-a="done">အတည်ပြု</button><button class="no" data-a="rejected">ပယ်ချ</button></div>`;
+  el.querySelector('[data-a=slip]').onclick=async()=>{
+   const {data:u}=await db.storage.from('slips').createSignedUrl(o.slip_path,300);
+   el.querySelector('.slip').innerHTML=u?`<img src="${u.signedUrl}" alt="slip">`:'Slip မတွေ့ပါ'};
+  for(const st of ['done','rejected'])el.querySelector(`[data-a=${st}]`).onclick=async()=>{
+   if(!confirm(`${o.order_no} ကို ${label[st]} လုပ်မလား?`))return;
+   const {data:r,error:e}=await db.from('orders').update({status:st,note:el.querySelector('.note').value||null}).eq('id',o.id).select();
+   if(e||!r||!r.length){alert('မအောင်မြင်: '+(e?e.message:'ပြင်ခွင့်မရှိပါ'));return}
+   loadOrders();loadSummary();};
+  $('list').appendChild(el);}
+}
+
 start();
 </script>
 </body>
