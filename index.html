@@ -8,88 +8,76 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--f:"Plus Jakarta Sans","Noto Sans Myanmar","Padauk","Myanmar Text",system-ui,sans-serif;--bg:#eef3f1;--s:#fff;--ink:#0f2f2c;--mut:#5d7471;--line:#d6e2df;--p:#0b5d55;--on:#fff;--g:#f2b705;--hero:#083f3a;color-scheme:light}
-@media(prefers-color-scheme:dark){:root{--bg:#0b1716;--s:#13211f;--ink:#e9f3f1;--mut:#8fa8a4;--line:#243836;--p:#3cd0be;--on:#06201d;--hero:#0f2a27;color-scheme:dark}}
+:root{--f:"Plus Jakarta Sans","Noto Sans Myanmar","Padauk","Myanmar Text",system-ui,sans-serif;--bg:#f6f7f6;--s:#fff;--ink:#14201e;--mut:#6b7c79;--line:#e0e7e5;--p:#0b5d55;--on:#fff;--g:#f2b705;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1716;--s:#15221f;--ink:#e9f3f1;--mut:#8fa8a4;--line:#26393a;--p:#3cd0be;--on:#06201d;color-scheme:dark}}
 *{box-sizing:border-box}[hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--f);font-variant-numeric:tabular-nums;-webkit-text-size-adjust:100%}
-.wrap{max-width:480px;margin:0 auto;padding-bottom:36px}
-.hero{background:var(--hero);color:#fff;padding:18px 18px 24px;border-radius:0 0 28px 28px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700}
-.mark{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--g);color:#2a2000;font-weight:800;font-size:.8rem}
-.lang{display:flex;background:rgba(255,255,255,.12);border-radius:10px;padding:3px}
-.lang button{border:0;background:none;color:#cfe5e1;padding:5px 11px;border-radius:8px;font:inherit;font-size:.85rem;cursor:pointer}
-.lang .on{background:#fff;color:#083f3a;font-weight:700}
-.board{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
-.board>div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:12px 14px}
-.board small,.board em,.note{color:#b8d6d1;font-size:.8rem;font-style:normal}
-.board small{display:block}.board strong{display:block;font:800 2rem/1.25 var(--f);color:var(--g)}
-.note{margin:12px 2px 0}
-main{padding:0 16px}
-.card{background:var(--s);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:16px;box-shadow:0 10px 26px -18px rgba(8,63,58,.5)}
-h2{font-size:1.1rem;margin:0 0 12px}
-label{display:block;font-size:.85rem;color:var(--mut);margin:14px 0 5px}
-input,select{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f);font-variant-numeric:tabular-nums;-webkit-text-size-adjust:100%}
+.app{max-width:440px;margin:0 auto;padding:12px 14px 18px}
+header{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700}
+.mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--g);color:#2a2000;font:800 .72rem var(--f)}
+.lang{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.lang button{border:0;background:none;color:var(--mut);padding:4px 10px;font:inherit;font-size:.8rem;cursor:pointer}
+.lang .on{background:var(--p);color:var(--on);font-weight:700}
+.rates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.rates>div{background:var(--s);border:1px solid var(--line);border-radius:12px;padding:7px 12px}
+.rates small{display:block;color:var(--mut);font-size:.74rem}.rates b{font:800 1.45rem/1.25 var(--f);color:var(--p)}
+.sub{margin:6px 2px 0;color:var(--mut);font-size:.72rem}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line);margin:10px 0 12px}
+.tabs button{border:0;background:none;padding:8px;font:600 .92rem var(--f);color:var(--mut);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer}
+.tabs .on{color:var(--p);border-color:var(--p)}
+input,select{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:var(--s);color:var(--ink);font:inherit}
 input:focus,select:focus{outline:0;border-color:var(--p)}
-.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:12px;padding:4px;margin-bottom:6px}
-.seg button{border:0;background:none;padding:10px;border-radius:9px;font:700 .95rem var(--f);color:var(--mut);cursor:pointer}
-.seg .on{background:var(--s);color:var(--p);box-shadow:0 1px 5px rgba(0,0,0,.15)}
-.amt{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);padding:0 14px}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--line);border-radius:10px;padding:3px}
+.seg button{border:0;background:none;padding:7px;border-radius:8px;font:700 .88rem var(--f);color:var(--mut);cursor:pointer}
+.seg .on{background:var(--s);color:var(--p)}
+.amt{display:flex;align-items:center;gap:8px;margin-top:10px;border:1px solid var(--line);border-radius:12px;background:var(--s);padding:0 12px}
 .amt:focus-within{border-color:var(--p)}
-.amt input{border:0;background:none;font:800 1.7rem var(--f);padding:10px 0;flex:1;min-width:0}
-.amt span{font-weight:700;color:var(--mut)}
-.get{margin-top:12px;min-height:3.2rem}.get small{display:block;color:var(--mut);font-size:.82rem}
-.get b{font:800 1.6rem var(--f);color:var(--p)}.get i{font-style:normal;font-size:.9rem;color:var(--mut)}
-.pay{display:flex;gap:10px;justify-content:space-between;align-items:flex-start;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--bg);border-left:4px solid var(--g)}
-.pay small{color:var(--mut);font-size:.8rem}.pay pre{margin:2px 0 0;white-space:pre-wrap;font:600 .95rem/1.5 var(--f)}
-.ghost{border:1.5px solid var(--line);background:var(--s);color:var(--ink);padding:6px 12px;border-radius:10px;font:inherit;font-size:.85rem;cursor:pointer;flex:none}
-.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:92px;border:2px dashed var(--line);border-radius:14px;color:var(--mut);cursor:pointer;margin:0;text-align:center;padding:10px}
-.drop img{max-height:150px;max-width:100%;border-radius:8px}
-.btn{width:100%;margin-top:18px;padding:14px;border:0;border-radius:14px;background:var(--p);color:var(--on);font:700 1rem var(--f);cursor:pointer}
-.btn:disabled{opacity:.5}
-.row2{display:flex;gap:8px}.row2 .btn{width:auto;margin:0;padding:0 18px}
-.badge{display:inline-block;padding:3px 12px;border-radius:99px;font-weight:700;font-size:.85rem}
+.amt input{border:0;background:none;font:800 1.5rem var(--f);padding:7px 0;min-width:0}.amt span{font-weight:700;color:var(--mut)}
+.get{display:flex;justify-content:space-between;align-items:baseline;min-height:30px;padding:4px 2px;color:var(--mut);font-size:.85rem}
+.get b{font:800 1.3rem var(--f);color:var(--p)}.get i{font-style:normal;font-size:.8rem;color:var(--mut)}
+.pay{display:flex;gap:8px;justify-content:space-between;align-items:center;padding:8px 11px;border-radius:10px;background:var(--s);border:1px dashed var(--line)}
+.pay small{color:var(--mut);font-size:.72rem}.pay pre{margin:0;white-space:pre-wrap;font:600 .88rem/1.4 var(--f)}
+.lb{display:block;color:var(--mut);font-size:.74rem;margin:10px 2px 4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.two:first-of-type{margin-top:10px}
+.ghost{border:1px solid var(--line);background:var(--s);color:var(--ink);padding:5px 11px;border-radius:9px;font:inherit;font-size:.8rem;cursor:pointer;flex:none}
+.file{display:flex;align-items:center;gap:10px;margin-top:8px;padding:8px 11px;border:1px dashed var(--line);border-radius:10px;background:var(--s);color:var(--mut);cursor:pointer;font-size:.88rem;overflow:hidden}
+.file img{width:34px;height:34px;object-fit:cover;border-radius:6px}.file span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{width:100%;margin-top:12px;padding:12px;border:0;border-radius:12px;background:var(--p);color:var(--on);font:700 1rem var(--f);cursor:pointer}
+.btn:disabled{opacity:.5}.row2{display:flex;gap:8px}.row2 .btn{width:auto;margin:0;padding:0 18px}
+.badge{display:inline-block;padding:2px 11px;border-radius:99px;font-weight:700;font-size:.82rem}
 .pending{background:#fff1cf;color:#7a5200}.done{background:#d3f2e3;color:#0a5c3a}.rejected{background:#fcdcd9;color:#8a1c14}
-.st{margin-top:14px;padding:14px;border-radius:12px;background:var(--bg)}.st p{margin:8px 0}.st img{max-width:100%;border-radius:10px;margin-top:6px}
-.ver{text-align:center;color:var(--mut);font-size:.75rem;margin-top:18px}
+.st{margin-top:12px;padding:12px;border-radius:12px;background:var(--s);border:1px solid var(--line)}.st p{margin:6px 0}.st img{max-width:100%;border-radius:10px;margin-top:6px}
+.ver{text-align:center;color:var(--mut);font-size:.7rem;margin:12px 0 0}
 .swal2-popup{font-family:var(--f)}.no{font:800 1.6rem var(--f);letter-spacing:1px;margin:6px 0}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header class="hero">
- <div class="top"><div class="brand"><span class="mark">฿⇄K</span><span data-t="title"></span></div>
-  <div class="lang"><button data-l="my">မြန်မာ</button><button data-l="en">EN</button></div></div>
- <div class="board">
-  <div><small data-t="r1"></small><strong id="r1">–</strong><em data-t="per"></em></div>
-  <div><small data-t="r2"></small><strong id="r2">–</strong><em data-t="per"></em></div>
- </div>
- <p class="note" id="minnote"></p>
-</header>
-<main>
-<section class="card">
- <h2 data-t="new"></h2>
+<div class="app">
+<header><div class="brand"><span class="mark">฿K</span><span data-t="title"></span></div>
+ <div class="lang"><button data-l="my">မြန်မာ</button><button data-l="en">EN</button></div></header>
+<div class="rates"><div><small data-t="r1"></small><b id="r1">–</b></div><div><small data-t="r2"></small><b id="r2">–</b></div></div>
+<p class="sub" id="minnote"></p>
+<nav class="tabs" id="tabs"><button data-p="p1" class="on" data-t="tab1"></button><button data-p="p2" data-t="tab2"></button></nav>
+
+<section id="p1">
  <div class="seg" id="seg"><button data-d="THB_MMK" class="on">THB → MMK</button><button data-d="MMK_THB">MMK → THB</button></div>
- <label data-t="amt"></label>
- <div class="amt"><input id="amt" type="number" inputmode="decimal" min="0" placeholder="0"><span id="cur">THB</span></div>
+ <div class="amt"><input id="amt" type="number" inputmode="decimal" min="0" data-ph="amt"><span id="cur">THB</span></div>
  <div class="get" id="calc"></div>
  <div class="pay"><div><small data-t="payto"></small><pre id="payt"></pre></div><button class="ghost" id="cp" data-t="copy"></button></div>
- <label data-t="name"></label><input id="name" autocomplete="name">
- <label data-t="phone"></label><input id="phone" type="tel" autocomplete="tel">
- <label data-t="method"></label><select id="method"></select>
- <label data-t="acc"></label><input id="acc" inputmode="text">
- <label data-t="slip"></label>
- <label class="drop" for="slip"><span data-t="pick"></span><img id="prev" alt="" hidden></label>
+ <div class="two"><input id="name" autocomplete="name" data-ph="name"><input id="phone" type="tel" autocomplete="tel" data-ph="phone"></div>
+ <span class="lb" data-t="recv"></span>
+ <div class="two" style="margin-top:0"><select id="method"></select><input id="acc" data-ph="acc"></div>
+ <label class="file" for="slip"><img id="prev" alt="" hidden><span id="fn" data-t="pick"></span></label>
  <input id="slip" type="file" accept="image/*" hidden>
  <button class="btn" id="submit" data-t="submit"></button>
 </section>
-<section class="card">
- <h2 data-t="check"></h2>
+
+<section id="p2" hidden>
  <div class="row2"><input id="ono" placeholder="TM-XXXXXX" style="text-transform:uppercase"><button class="btn" id="chk" data-t="checkbtn"></button></div>
  <div id="status"></div>
 </section>
-<p class="ver">v5</p>
-</main>
+<p class="ver">v6</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
@@ -98,10 +86,10 @@ const SUPABASE_URL='https://cegxxtfwphzpxeqsufqr.supabase.co';
 const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZ3h4dGZ3cGh6cHhlcXN1ZnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU0MDI4NDcsImV4cCI6MjExMDk3ODg0N30.xi7bK0WbkkE1AX4l6czbnTozTjvUZTwqixMZ-b6Z0q8';
 const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const dark=matchMedia('(prefers-color-scheme:dark)').matches;
-const S=Swal.mixin({confirmButtonColor:'#0b5d55',heightAuto:false,background:dark?'#13211f':'#fff',color:dark?'#e9f3f1':'#0f2f2c'});
+const S=Swal.mixin({confirmButtonColor:'#0b5d55',heightAuto:false,background:dark?'#15221f':'#fff',color:dark?'#e9f3f1':'#14201e'});
 const T={
-my:{title:'ဘတ် ⇄ ကျပ် ငွေလွှဲ',r1:'ဘတ်ပေးရင်',r2:'ဘတ်ပြန်ယူရင်',per:'ကျပ် ၁ သိန်းလျှင် ဘတ်',border:'နယ်စပ်ပေါက်ဈေး',minnote:'အနည်းဆုံး',min:'ကျပ်',new:'ငွေလွှဲမယ်',amt:'ပေးပို့မယ့် ပမာဏ',get:'သင်ရမယ့်ငွေ',payto:'ဒီအကောင့်ကို အရင်လွှဲပါ',copy:'ကူးယူ',copied:'ကူးပြီးပါပြီ',name:'သင့်အမည်',phone:'ဖုန်းနံပါတ်',method:'လက်ခံမယ့်နည်းလမ်း',acc:'လက်ခံမယ့် အကောင့်/နံပါတ်',slip:'ငွေလွှဲပြီးကြောင်း slip ဓာတ်ပုံ',pick:'ဓာတ်ပုံရွေးရန် နှိပ်ပါ',submit:'Order တင်မယ်',check:'Order အခြေအနေစစ်ရန်',checkbtn:'စစ်မယ်',fill:'အချက်အလက်အားလုံး ဖြည့်ပြီး slip တင်ပါ',ok:'Order တင်ပြီးပါပြီ',keep:'ဒီနံပါတ်ကို မှတ်ထားပါ',pending:'စောင့်ဆိုင်းနေသည်',done:'ပြီးစီးပါပြီ',rejected:'ပယ်ချခံရသည်',nf:'Order မတွေ့ပါ',fail:'မအောင်မြင်ပါ၊ ပြန်ကြိုးစားပါ',minerr:'အနည်းဆုံး ကျပ် {n} ကစပြီး လုပ်ပေးပါမယ်',payout:'ငွေပြန်လွှဲ slip',norate:'Rate မရသေးပါ၊ page ကို refresh လုပ်ပါ',wait:'တင်နေသည်...'},
-en:{title:'THB ⇄ MMK Transfer',r1:'You give THB',r2:'You take THB',per:'THB per MMK 100,000',border:'Border rate',minnote:'Minimum',min:'MMK',new:'New transfer',amt:'Amount to send',get:'You receive',payto:'Send your money to this account first',copy:'Copy',copied:'Copied',name:'Your name',phone:'Phone number',method:'Receive via',acc:'Receiving account / number',slip:'Payment slip photo',pick:'Tap to choose a photo',submit:'Place order',check:'Check order status',checkbtn:'Check',fill:'Fill in everything and attach the slip',ok:'Order placed',keep:'Keep this number',pending:'Pending',done:'Completed',rejected:'Rejected',nf:'Order not found',fail:'Failed, please try again',minerr:'Minimum is MMK {n}',payout:'Payout slip',norate:'Rates not loaded, please refresh',wait:'Uploading...'}};
+my:{title:'ဘတ် ⇄ ကျပ် ငွေလွှဲ',r1:'ဘတ်ပေးရင်',r2:'ဘတ်ပြန်ယူရင်',per:'ကျပ် ၁ သိန်းလျှင် ဘတ်',border:'နယ်စပ်',minnote:'အနည်းဆုံး',min:'ကျပ်',tab1:'ငွေလွှဲမယ်',tab2:'Order စစ်မယ်',amt:'ပေးပို့မယ့် ပမာဏ',get:'သင်ရမယ့်ငွေ',payto:'ဒီအကောင့်ကို အရင်လွှဲပါ',copy:'ကူးယူ',copied:'ကူးပြီးပါပြီ',name:'အမည်',phone:'ဖုန်းနံပါတ်',recv:'ငွေလက်ခံမယ့်နေရာ',acc:'အကောင့်/နံပါတ်',pick:'ငွေလွှဲ slip ဓာတ်ပုံ ရွေးရန်',submit:'Order တင်မယ်',checkbtn:'စစ်မယ်',fill:'အချက်အလက်အားလုံး ဖြည့်ပြီး slip တင်ပါ',ok:'Order တင်ပြီးပါပြီ',keep:'ဒီနံပါတ်ကို မှတ်ထားပါ',pending:'စောင့်ဆိုင်းနေသည်',done:'ပြီးစီးပါပြီ',rejected:'ပယ်ချခံရသည်',nf:'Order မတွေ့ပါ',fail:'မအောင်မြင်ပါ၊ ပြန်ကြိုးစားပါ',minerr:'အနည်းဆုံး ကျပ် {n} ကစပြီး လုပ်ပေးပါမယ်',payout:'ငွေပြန်လွှဲ slip',norate:'Rate မရသေးပါ၊ page ကို refresh လုပ်ပါ',wait:'တင်နေသည်...'},
+en:{title:'THB ⇄ MMK Transfer',r1:'You give THB',r2:'You take THB',per:'THB per MMK 100,000',border:'Border',minnote:'Min',min:'MMK',tab1:'Transfer',tab2:'Check order',amt:'Amount to send',get:'You receive',payto:'Send your money to this account first',copy:'Copy',copied:'Copied',name:'Name',phone:'Phone',recv:'Receive to',acc:'Account / number',pick:'Choose payment slip photo',submit:'Place order',checkbtn:'Check',fill:'Fill in everything and attach the slip',ok:'Order placed',keep:'Keep this number',pending:'Pending',done:'Completed',rejected:'Rejected',nf:'Order not found',fail:'Failed, please try again',minerr:'Minimum is MMK {n}',payout:'Payout slip',norate:'Rates not loaded, please refresh',wait:'Uploading...'}};
 const M={THB_MMK:['KPay','Wave Pay','AYA Pay','Bank'],MMK_THB:['PromptPay','Thai bank account']};
 let L='my',R=null,D='THB_MMK';try{L=localStorage.getItem('lang')||'my'}catch(e){}
 const $=id=>document.getElementById(id),qa=s=>document.querySelectorAll(s);
@@ -111,13 +99,15 @@ const toast=(icon,title)=>S.fire({toast:true,position:'top',icon,title,timer:180
 
 function setLang(l){L=l;try{localStorage.setItem('lang',l)}catch(e){}
  document.documentElement.lang=l;qa('[data-t]').forEach(e=>e.textContent=T[l][e.dataset.t]);
- qa('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));note();calc()}
-function note(){if(R)$('minnote').textContent=`${T[L].border}: ${fmt(R.border_rate)} · ${T[L].minnote}: ${fmt(R.min_mmk)} ${T[L].min}`}
+ qa('[data-ph]').forEach(e=>e.placeholder=T[l][e.dataset.ph]);
+ qa('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+ const f=$('slip').files[0];if(f)$('fn').textContent=f.name;note();calc()}
+function note(){if(R)$('minnote').textContent=`${T[L].per} · ${T[L].border} ${fmt(R.border_rate)} · ${T[L].minnote} ${fmt(R.min_mmk)} ${T[L].min}`}
 function fillMethods(){$('method').innerHTML=M[D].map(m=>`<option>${m}</option>`).join('')}
 function calc(){if(!R)return 0;const a=parseFloat($('amt').value)||0,t=D==='THB_MMK';
  const get=t?Math.round(a/R.give_rate*1e5):Math.round(a/1e5*R.take_rate*100)/100;
  $('cur').textContent=t?'THB':'MMK';
- $('calc').innerHTML=a>0?`<small>${T[L].get}</small><b>${fmt(get)} <i>${t?'MMK':'THB'}</i></b>`:'';
+ $('calc').innerHTML=a>0?`<span>${T[L].get}</span><b>${fmt(get)} <i>${t?'MMK':'THB'}</i></b>`:'';
  $('payt').textContent=t?R.pay_thb:R.pay_mmk;return get}
 async function load(){const {data}=await db.from('rates').select('*').eq('id',1).single();
  if(data){R=data;$('r1').textContent=fmt(R.give_rate);$('r2').textContent=fmt(R.take_rate);note();calc()}}
@@ -142,7 +132,7 @@ async function submitOrder(){
   if(error)throw new Error('order: '+error.message);
   try{localStorage.setItem('lo',no)}catch(e){}
   $('ono').value=no;
-  S.fire({icon:'success',title:t.ok,html:`<div class="no">${no}</div><div>${t.keep}</div>`,showDenyButton:true,denyButtonText:t.copy,denyButtonColor:'#5d7471'})
+  S.fire({icon:'success',title:t.ok,html:`<div class="no">${no}</div><div>${t.keep}</div>`,showDenyButton:true,denyButtonText:t.copy,denyButtonColor:'#6b7c79'})
    .then(r=>{if(r.isDenied){navigator.clipboard?.writeText(no);toast('success',t.copied)}});
  }catch(e){S.fire({icon:'error',title:t.fail,text:e.message})}
  finally{$('submit').disabled=false}
@@ -157,14 +147,16 @@ async function checkOrder(){
   <p>${fmt(o.send_amount)} ${a} → <b>${fmt(o.receive_amount)} ${b}</b></p>
   ${o.note?`<p>${esc(o.note)}</p>`:''}
   ${url?`<small>${t.payout}</small><br><a href="${encodeURI(url)}" target="_blank" rel="noopener"><img src="${encodeURI(url)}" alt=""></a>`:''}</div>`}
+function tab(p){qa('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));$('p1').hidden=p!=='p1';$('p2').hidden=p!=='p2'}
 
 qa('.lang button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+qa('#tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.p));
 qa('#seg button').forEach(b=>b.onclick=()=>{D=b.dataset.d;qa('#seg button').forEach(x=>x.classList.toggle('on',x===b));fillMethods();calc()});
 $('amt').oninput=calc;$('submit').onclick=submitOrder;$('chk').onclick=checkOrder;
 $('cp').onclick=()=>{navigator.clipboard?.writeText($('payt').textContent);toast('success',T[L].copied)};
-$('slip').onchange=e=>{const f=e.target.files[0],p=$('prev');if(f){p.src=URL.createObjectURL(f);p.hidden=false;document.querySelector('.drop span').hidden=true}};
+$('slip').onchange=e=>{const f=e.target.files[0];if(f){$('prev').src=URL.createObjectURL(f);$('prev').hidden=false;$('fn').textContent=f.name}};
 fillMethods();setLang(L);load();
-try{const s=localStorage.getItem('lo');if(s){$('ono').value=s;checkOrder()}}catch(e){}
+try{const s=localStorage.getItem('lo');if(s){$('ono').value=s;tab('p2');checkOrder()}}catch(e){}
 </script>
 </body>
 </html>

@@ -8,60 +8,71 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--f:"Plus Jakarta Sans","Noto Sans Myanmar","Padauk","Myanmar Text",system-ui,sans-serif;--bg:#eef3f1;--s:#fff;--ink:#0f2f2c;--mut:#5d7471;--line:#d6e2df;--p:#0b5d55;--on:#fff;--g:#f2b705;--bad:#c0392b;--hero:#083f3a;color-scheme:light}
-@media(prefers-color-scheme:dark){:root{--bg:#0b1716;--s:#13211f;--ink:#e9f3f1;--mut:#8fa8a4;--line:#243836;--p:#3cd0be;--on:#06201d;--bad:#ff8f84;--hero:#0f2a27;color-scheme:dark}}
-*{box-sizing:border-box}.hide{display:none!important}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--f);font-variant-numeric:tabular-nums}
-.mark{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:var(--g);color:#2a2000;font-weight:800;font-size:.78rem}
-.bar{background:var(--hero);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
-.brand{display:flex;gap:10px;align-items:center;font-weight:700}.brand small{color:#b8d6d1;font-weight:500}
-main{max-width:820px;margin:0 auto;padding:0 14px 40px}
-.card{background:var(--s);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px;box-shadow:0 10px 26px -18px rgba(8,63,58,.5)}
-h1{margin:6px 0 4px;font-size:1.3rem}h2{font-size:1.05rem;margin:0}.hint{color:var(--mut);font-size:.85rem;margin:2px 0 8px}
-label{display:block;font-size:.82rem;color:var(--mut);margin:12px 0 4px}
-input,textarea{width:100%;padding:11px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit}
+:root{--f:"Plus Jakarta Sans","Noto Sans Myanmar","Padauk","Myanmar Text",system-ui,sans-serif;--bg:#f6f7f6;--s:#fff;--ink:#14201e;--mut:#6b7c79;--line:#e0e7e5;--p:#0b5d55;--on:#fff;--g:#f2b705;--bad:#c0392b;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1716;--s:#15221f;--ink:#e9f3f1;--mut:#8fa8a4;--line:#26393a;--p:#3cd0be;--on:#06201d;--bad:#ff8f84;color-scheme:dark}}
+*{box-sizing:border-box}.hide,[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.55 var(--f);font-variant-numeric:tabular-nums}
+.mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--g);color:#2a2000;font:800 .72rem var(--f)}
+.bar{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:12px 14px 4px}
+.brand{display:flex;gap:9px;align-items:center;font-weight:700}.brand small{color:var(--mut);font-weight:500}
+main{max-width:760px;margin:0 auto;padding:0 14px 28px}
+h1{margin:6px 0 2px;font-size:1.25rem}.hint{color:var(--mut);font-size:.8rem;margin:2px 0 8px}
+.tabs{max-width:760px;margin:6px auto 12px;padding:0 14px;display:flex;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;border:0;background:none;padding:9px 4px;font:600 .92rem var(--f);color:var(--mut);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer}
+.tabs .on{color:var(--p);border-color:var(--p)}
+.tabs i,.cnt{font-style:normal;display:inline-block;min-width:18px;height:18px;padding:0 5px;border-radius:9px;font:700 .7rem/18px var(--f);text-align:center;background:var(--line);color:var(--ink)}
+.tabs i{margin-left:6px}.tabs i:empty{display:none}
+.cnt.hot,.tabs i{background:var(--g);color:#2a2000}
+label{display:block;font-size:.76rem;color:var(--mut);margin:10px 0 3px}
+input,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--s);color:var(--ink);font:inherit}
 input:focus,textarea:focus{outline:0;border-color:var(--p)}
-.btn{padding:11px 18px;border:0;border-radius:12px;background:var(--p);color:var(--on);font:700 .95rem var(--f);cursor:pointer}
-.btn.full{width:100%;margin-top:16px}.btn.bad{background:none;border:1.5px solid var(--bad);color:var(--bad)}
-.ghost{border:1.5px solid var(--line);background:var(--s);color:var(--ink);padding:6px 12px;border-radius:10px;font:inherit;font-size:.85rem;cursor:pointer}
-.bar .ghost{background:none;color:#fff;border-color:rgba(255,255,255,.35)}
-.gate{min-height:100vh;display:grid;place-items:center;padding:16px}.gate .card{width:100%;max-width:380px}
-.sh{display:flex;justify-content:space-between;align-items:center}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
-.chips button{border:1.5px solid var(--line);background:none;color:var(--mut);padding:6px 14px;border-radius:99px;font:inherit;font-size:.88rem;cursor:pointer}
+.btn{padding:9px 14px;border:0;border-radius:10px;background:var(--p);color:var(--on);font:700 .9rem var(--f);cursor:pointer}
+.btn.full{width:100%;margin-top:14px;padding:12px}.btn.bad{background:none;border:1px solid var(--bad);color:var(--bad)}
+.ghost{border:1px solid var(--line);background:var(--s);color:var(--ink);padding:5px 11px;border-radius:9px;font:inherit;font-size:.82rem;cursor:pointer}
+.gate{min-height:100vh;display:grid;place-items:center;padding:16px}.gate>div{width:100%;max-width:340px}
+.gate .box{background:var(--s);border:1px solid var(--line);border-radius:16px;padding:18px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+.chips button{position:relative;border:1px solid var(--line);background:var(--s);color:var(--mut);padding:5px 13px;border-radius:99px;font:inherit;font-size:.86rem;cursor:pointer}
 .chips .on{background:var(--p);border-color:var(--p);color:var(--on);font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-.stat{background:var(--bg);border-radius:14px;padding:10px 12px}.stat span{font-size:.78rem;color:var(--mut)}.stat b{display:block;font:800 1.3rem var(--f)}
-.oc{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px}
-.oh{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.oh time{margin-left:auto;color:var(--mut);font-size:.8rem}
-.flow{display:flex;align-items:center;gap:10px;margin:10px 0;font:800 1.15rem var(--f)}.flow i{font-style:normal;font-size:.8rem;color:var(--mut)}.flow em{color:var(--mut);font-style:normal}.flow .rx{color:var(--p)}
-dl{margin:0}dl div{display:flex;gap:10px;padding:5px 0;border-top:1px dashed var(--line)}dt{width:84px;color:var(--mut);flex:none}dd{margin:0;word-break:break-word}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.acts .btn{padding:9px 14px}
-.mini{border:0;background:var(--bg);color:var(--p);padding:1px 9px;border-radius:8px;font:inherit;font-size:.78rem;cursor:pointer}
-.badge{display:inline-block;padding:2px 11px;border-radius:99px;font-weight:700;font-size:.82rem}
+.chips .cnt{position:absolute;top:-9px;right:-5px;height:17px;line-height:17px;min-width:17px;font-size:.66rem;border:1.5px solid var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.stat{background:var(--s);border:1px solid var(--line);border-radius:12px;padding:8px 12px}.stat span{font-size:.74rem;color:var(--mut)}.stat b{display:block;font:800 1.2rem var(--f)}
+.oc{background:var(--s);border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px}
+.oh{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.oh time{margin-left:auto;color:var(--mut);font-size:.76rem}
+.flow{display:flex;align-items:baseline;gap:8px;margin:6px 0;font:800 1.1rem var(--f)}.flow i{font-style:normal;font-size:.74rem;color:var(--mut)}.flow em{color:var(--mut);font-style:normal}.flow .rx{color:var(--p)}
+.meta{margin:2px 0;color:var(--mut);font-size:.86rem;word-break:break-word}.meta b,.meta a{color:var(--ink)}
+.acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.acts .btn,.acts .ghost{padding:7px 12px;font-size:.84rem}
+.mini{border:0;background:var(--bg);color:var(--p);padding:0 8px;border-radius:7px;font:inherit;font-size:.74rem;cursor:pointer}
+.badge{display:inline-block;padding:1px 10px;border-radius:99px;font-weight:700;font-size:.78rem}
 .pending{background:#fff1cf;color:#7a5200}.done{background:#d3f2e3;color:#0a5c3a}.rejected{background:#fcdcd9;color:#8a1c14}
-.pt{margin-top:10px}.pt img{height:84px;border-radius:10px;border:1px solid var(--line);cursor:pointer}
+.pt img{height:64px;border-radius:8px;border:1px solid var(--line);cursor:pointer;margin-top:6px}
 .swal2-popup{font-family:var(--f)}.sw{color:var(--mut);margin:6px 0}code{word-break:break-all;font-size:.85rem}
 </style>
 </head>
 <body>
-<div id="login" class="gate"><div class="card">
- <span class="mark">฿⇄K</span><h1>Admin</h1><p class="hint">Email + Password ပြီးရင် authenticator app code တောင်းပါမယ်</p>
+<div id="login" class="gate"><div><div class="box">
+ <span class="mark">฿K</span><h1>Admin</h1><p class="hint">Email + Password ပြီးရင် authenticator code တောင်းပါမယ်</p>
  <label>Email</label><input id="em" type="email" autocomplete="username">
  <label>Password</label><input id="pw" type="password" autocomplete="current-password">
  <button class="btn full" id="lb">Login</button>
-</div></div>
+</div></div></div>
 
 <div id="app" class="hide">
- <header class="bar"><div class="brand"><span class="mark">฿⇄K</span><span>Admin <small>v5</small></span></div><button class="ghost" id="lo">Logout</button></header>
+ <header class="bar"><div class="brand"><span class="mark">฿K</span><span>Admin <small>v6</small></span></div><button class="ghost" id="lo">Logout</button></header>
+ <nav class="tabs" id="tabs"><button data-p="po" class="on">Orders<i id="c_p"></i></button><button data-p="ps">စာရင်းချုပ်</button><button data-p="pr">Rate</button></nav>
  <main>
-  <section class="card">
-   <div class="sh"><h2>Orders</h2><button class="ghost" id="rf">Refresh</button></div>
-   <div class="chips" id="flt"><button data-f="pending" class="on">စောင့်ဆိုင်း</button><button data-f="done">ပြီးစီး</button><button data-f="rejected">ပယ်ချ</button><button data-f="all">အားလုံး</button></div>
+  <section id="po">
+   <div class="row"><div class="chips" id="flt">
+    <button data-f="pending" class="on">စောင့်ဆိုင်း<i class="cnt hot" id="n_pending">0</i></button>
+    <button data-f="done">ပြီးစီး<i class="cnt" id="n_done">0</i></button>
+    <button data-f="rejected">ပယ်ချ<i class="cnt" id="n_rejected">0</i></button>
+    <button data-f="all">အားလုံး<i class="cnt" id="n_all">0</i></button></div>
+    <button class="ghost" id="rf">↻</button></div>
    <div id="list"></div>
   </section>
-  <section class="card"><h2>ယနေ့ စာရင်းချုပ်</h2><p class="hint">ပြီးစီးပြီးသား order များ</p><div class="grid" id="sum"></div></section>
-  <section class="card"><h2>Rate ပြင်ရန်</h2><p class="hint">ကျပ် ၁ သိန်းလျှင် ဘတ်</p>
+  <section id="ps" hidden><p class="hint">ယနေ့ — ပြီးစီးပြီးသား order များ</p><div class="grid" id="sum"></div></section>
+  <section id="pr" hidden><p class="hint">ကျပ် ၁ သိန်းလျှင် ဘတ်</p>
    <div class="grid">
     <div><label>နယ်စပ်ပေါက်ဈေး</label><input id="r_e" type="number" step="any"></div>
     <div><label>ဘတ်ပေးရင်</label><input id="r_a" type="number" step="any"></div>
@@ -133,7 +144,13 @@ async function enroll(f){
  return ask(data.id,html,'2-step verification ဖွင့်ရန်',()=>{$('qr').src=data.totp.qr_code});
 }
 function start(){$('login').classList.add('hide');$('app').classList.remove('hide');loadRates();refresh()}
-async function refresh(){await Promise.all([loadOrders(),loadSummary()])}
+async function refresh(){await Promise.all([loadOrders(),loadSummary(),loadCounts()])}
+async function loadCounts(){
+ const st=['pending','done','rejected'];
+ const r=await Promise.all(st.map(x=>db.from('orders').select('id',{count:'exact',head:true}).eq('status',x)));
+ const c={};st.forEach((x,i)=>c[x]=r[i].count||0);c.all=c.pending+c.done+c.rejected;
+ for(const k in c)$('n_'+k).textContent=c[k];
+ $('c_p').textContent=c.pending||''}
 
 /* ---------- rates ---------- */
 async function loadRates(){
@@ -176,12 +193,11 @@ async function loadOrders(){
   const pu=o.payout_slip_path?db.storage.from('payouts').getPublicUrl(o.payout_slip_path).data.publicUrl:'';
   el.innerHTML=`<div class="oh"><b>${esc(o.order_no)}</b><span class="badge ${o.status}">${label[o.status]}</span><time>${tm}</time></div>
    <div class="flow"><span>${fmt(o.send_amount)} <i>${a}</i></span><em>→</em><span class="rx">${fmt(o.receive_amount)} <i>${b}</i></span></div>
-   <dl><div><dt>အမည်</dt><dd>${esc(o.name)}</dd></div>
-   <div><dt>ဖုန်း</dt><dd><a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></dd></div>
-   <div><dt>လက်ခံမယ့်</dt><dd>${esc(o.receive_method)} · <b>${esc(o.receive_account)}</b> <button class="mini" data-a="cp">ကူး</button></dd></div>
-   ${o.note?`<div><dt>Note</dt><dd>${esc(o.note)}</dd></div>`:''}</dl>
+   <p class="meta">${esc(o.name)} · <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></p>
+   <p class="meta">${esc(o.receive_method)} · <b>${esc(o.receive_account)}</b> <button class="mini" data-a="cp">ကူး</button></p>
+   ${o.note?`<p class="meta">Note: ${esc(o.note)}</p>`:''}
    ${pu?`<div class="pt"><img src="${encodeURI(pu)}" alt="payout slip" data-a="pv"></div>`:''}
-   <div class="acts"><button class="ghost" data-a="slip">Customer slip ကြည့်</button>
+   <div class="acts"><button class="ghost" data-a="slip">Customer slip</button>
    ${o.status==='pending'?'<button class="btn" data-a="ok">ငွေပြန်လွှဲပြီး slip ပို့မယ်</button><button class="btn bad" data-a="no">ပယ်ချ</button>':''}</div>`;
   const on=(k,fn)=>{const e=el.querySelector(`[data-a=${k}]`);if(e)e.onclick=fn};
   on('cp',()=>copy(o.receive_account));on('slip',()=>viewImg('slips',o.slip_path));on('pv',()=>viewImg('payouts',o.payout_slip_path));
@@ -216,6 +232,8 @@ $('lb').onclick=login;$('pw').onkeydown=e=>{if(e.key==='Enter')login()};
 $('lo').onclick=async()=>{await db.auth.signOut();location.reload()};
 $('rf').onclick=refresh;$('sv').onclick=saveRates;
 document.querySelectorAll('#flt button').forEach(b=>b.onclick=()=>{F=b.dataset.f;document.querySelectorAll('#flt button').forEach(x=>x.classList.toggle('on',x===b));loadOrders()});
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
+ ['po','ps','pr'].forEach(id=>$(id).hidden=id!==b.dataset.p)});
 gate();
 </script>
 </body>
