@@ -5,149 +5,218 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f4ee;--card:#fff;--ink:#1d2a2a;--mut:#667;--line:#ddd8c9;--acc:#0f6b5c;--bad:#b3261e;color-scheme:light}
-@media(prefers-color-scheme:dark){:root{--bg:#121a19;--card:#1b2625;--ink:#eef2ef;--mut:#9aa8a5;--line:#2f3d3b;--acc:#43c0a8;--bad:#ff8a80;color-scheme:dark}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans Myanmar","Padauk","Myanmar Text",system-ui,sans-serif}
-main{max-width:900px;margin:0 auto;padding:16px}
-section,.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
-h2{font-size:1.05rem;margin:0 0 8px}
-label{display:block;color:var(--mut);font-size:.85rem;margin:8px 0 3px}
-input,select,textarea{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
-button{padding:8px 14px;border:0;border-radius:8px;background:var(--acc);color:#fff;font:inherit;font-weight:600;cursor:pointer}
-@media(prefers-color-scheme:dark){button{color:#0b1514}}
-button.alt{background:none;border:1px solid var(--line);color:var(--ink)}
-button.no{background:var(--bad);color:#fff}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-.stat b{display:block;font-size:1.3rem}
-.hide{display:none}
-.badge{padding:1px 9px;border-radius:99px;font-weight:600;font-size:.85rem}
-.pending{background:#fff1cf;color:#7a5200}.done{background:#d6f3e6;color:#0a5c3a}.rejected{background:#fcdcd9;color:#8a1c14}
-.order img{max-width:100%;max-height:360px;border-radius:8px;margin-top:8px}
-.err{color:var(--bad)}
+:root{--f:"Plus Jakarta Sans","Noto Sans Myanmar","Padauk","Myanmar Text",system-ui,sans-serif;--bg:#eef3f1;--s:#fff;--ink:#0f2f2c;--mut:#5d7471;--line:#d6e2df;--p:#0b5d55;--on:#fff;--g:#f2b705;--bad:#c0392b;--hero:#083f3a;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0b1716;--s:#13211f;--ink:#e9f3f1;--mut:#8fa8a4;--line:#243836;--p:#3cd0be;--on:#06201d;--bad:#ff8f84;--hero:#0f2a27;color-scheme:dark}}
+*{box-sizing:border-box}.hide{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--f);font-variant-numeric:tabular-nums}
+.mark{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:var(--g);color:#2a2000;font-weight:800;font-size:.78rem}
+.bar{background:var(--hero);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+.brand{display:flex;gap:10px;align-items:center;font-weight:700}.brand small{color:#b8d6d1;font-weight:500}
+main{max-width:820px;margin:0 auto;padding:0 14px 40px}
+.card{background:var(--s);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px;box-shadow:0 10px 26px -18px rgba(8,63,58,.5)}
+h1{margin:6px 0 4px;font-size:1.3rem}h2{font-size:1.05rem;margin:0}.hint{color:var(--mut);font-size:.85rem;margin:2px 0 8px}
+label{display:block;font-size:.82rem;color:var(--mut);margin:12px 0 4px}
+input,textarea{width:100%;padding:11px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit}
+input:focus,textarea:focus{outline:0;border-color:var(--p)}
+.btn{padding:11px 18px;border:0;border-radius:12px;background:var(--p);color:var(--on);font:700 .95rem var(--f);cursor:pointer}
+.btn.full{width:100%;margin-top:16px}.btn.bad{background:none;border:1.5px solid var(--bad);color:var(--bad)}
+.ghost{border:1.5px solid var(--line);background:var(--s);color:var(--ink);padding:6px 12px;border-radius:10px;font:inherit;font-size:.85rem;cursor:pointer}
+.bar .ghost{background:none;color:#fff;border-color:rgba(255,255,255,.35)}
+.gate{min-height:100vh;display:grid;place-items:center;padding:16px}.gate .card{width:100%;max-width:380px}
+.sh{display:flex;justify-content:space-between;align-items:center}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.chips button{border:1.5px solid var(--line);background:none;color:var(--mut);padding:6px 14px;border-radius:99px;font:inherit;font-size:.88rem;cursor:pointer}
+.chips .on{background:var(--p);border-color:var(--p);color:var(--on);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--bg);border-radius:14px;padding:10px 12px}.stat span{font-size:.78rem;color:var(--mut)}.stat b{display:block;font:800 1.3rem var(--f)}
+.oc{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px}
+.oh{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.oh time{margin-left:auto;color:var(--mut);font-size:.8rem}
+.flow{display:flex;align-items:center;gap:10px;margin:10px 0;font:800 1.15rem var(--f)}.flow i{font-style:normal;font-size:.8rem;color:var(--mut)}.flow em{color:var(--mut);font-style:normal}.flow .rx{color:var(--p)}
+dl{margin:0}dl div{display:flex;gap:10px;padding:5px 0;border-top:1px dashed var(--line)}dt{width:84px;color:var(--mut);flex:none}dd{margin:0;word-break:break-word}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.acts .btn{padding:9px 14px}
+.mini{border:0;background:var(--bg);color:var(--p);padding:1px 9px;border-radius:8px;font:inherit;font-size:.78rem;cursor:pointer}
+.badge{display:inline-block;padding:2px 11px;border-radius:99px;font-weight:700;font-size:.82rem}
+.pending{background:#fff1cf;color:#7a5200}.done{background:#d3f2e3;color:#0a5c3a}.rejected{background:#fcdcd9;color:#8a1c14}
+.pt{margin-top:10px}.pt img{height:84px;border-radius:10px;border:1px solid var(--line);cursor:pointer}
+.swal2-popup{font-family:var(--f)}.sw{color:var(--mut);margin:6px 0}code{word-break:break-all;font-size:.85rem}
 </style>
 </head>
 <body>
-<main>
-<section id="login">
- <h2>Admin login <small style="color:var(--mut)">v4</small></h2>
+<div id="login" class="gate"><div class="card">
+ <span class="mark">฿⇄K</span><h1>Admin</h1><p class="hint">Email + Password ပြီးရင် authenticator app code တောင်းပါမယ်</p>
  <label>Email</label><input id="em" type="email" autocomplete="username">
  <label>Password</label><input id="pw" type="password" autocomplete="current-password">
- <p><button onclick="login()">Login</button> <button class="alt" onclick="diag()">Test connection</button></p><div id="lerr" class="err"></div><pre id="dg" style="white-space:pre-wrap;font-size:.8rem"></pre>
-</section>
+ <button class="btn full" id="lb">Login</button>
+</div></div>
 
 <div id="app" class="hide">
- <div class="row" style="justify-content:space-between;margin-bottom:10px"><b>Admin panel</b><button class="alt" onclick="logout()">Logout</button></div>
-
- <section><h2>Orders</h2>
-  <div class="row"><select id="flt" onchange="loadOrders()" style="width:auto">
-   <option value="pending">စောင့်ဆိုင်း</option><option value="done">ပြီးစီး</option><option value="rejected">ပယ်ချ</option><option value="all">အားလုံး</option></select>
-   <button class="alt" onclick="loadOrders()">Refresh</button></div>
-  <div id="list"></div></section>
-
- <section><h2>ယနေ့ စာရင်းချုပ် (ပြီးစီးပြီးသား)</h2>
-  <div class="grid" id="sum"></div></section>
-
- <section><h2>Rate ပြင်ရန် (ကျပ် ၁ သိန်းလျှင် ဘတ်)</h2>
-  <div class="grid">
-   <div><label>နယ်စပ်ပေါက်ဈေး</label><input id="r_e" type="number" step="any"></div>
-   <div><label>ဘတ်ပေးရင်</label><input id="r_a" type="number" step="any"></div>
-   <div><label>ဘတ်ပြန်ယူရင်</label><input id="r_b" type="number" step="any"></div>
-   <div><label>အနည်းဆုံး ကျပ်</label><input id="r_f" type="number" step="any"></div>
-  </div>
-  <label>THB လက်ခံမယ့် အကောင့်</label><textarea id="r_c" rows="2"></textarea>
-  <label>MMK လက်ခံမယ့် အကောင့်</label><textarea id="r_d" rows="2"></textarea>
-  <p><button onclick="saveRates()">Save</button> <span id="rmsg"></span></p></section>
-
- 
-
- 
-
- 
+ <header class="bar"><div class="brand"><span class="mark">฿⇄K</span><span>Admin <small>v5</small></span></div><button class="ghost" id="lo">Logout</button></header>
+ <main>
+  <section class="card">
+   <div class="sh"><h2>Orders</h2><button class="ghost" id="rf">Refresh</button></div>
+   <div class="chips" id="flt"><button data-f="pending" class="on">စောင့်ဆိုင်း</button><button data-f="done">ပြီးစီး</button><button data-f="rejected">ပယ်ချ</button><button data-f="all">အားလုံး</button></div>
+   <div id="list"></div>
+  </section>
+  <section class="card"><h2>ယနေ့ စာရင်းချုပ်</h2><p class="hint">ပြီးစီးပြီးသား order များ</p><div class="grid" id="sum"></div></section>
+  <section class="card"><h2>Rate ပြင်ရန်</h2><p class="hint">ကျပ် ၁ သိန်းလျှင် ဘတ်</p>
+   <div class="grid">
+    <div><label>နယ်စပ်ပေါက်ဈေး</label><input id="r_e" type="number" step="any"></div>
+    <div><label>ဘတ်ပေးရင်</label><input id="r_a" type="number" step="any"></div>
+    <div><label>ဘတ်ပြန်ယူရင်</label><input id="r_b" type="number" step="any"></div>
+    <div><label>အနည်းဆုံး ကျပ်</label><input id="r_f" type="number" step="any"></div>
+   </div>
+   <label>THB လက်ခံမယ့် အကောင့်</label><textarea id="r_c" rows="2"></textarea>
+   <label>MMK လက်ခံမယ့် အကောင့်</label><textarea id="r_d" rows="2"></textarea>
+   <button class="btn full" id="sv">Save</button>
+  </section>
+ </main>
 </div>
-</main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
 <script>
-const SUPABASE_URL = 'https://cegxxtfwphzpxeqsufqr.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZ3h4dGZ3cGh6cHhlcXN1ZnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU0MDI4NDcsImV4cCI6MjExMDk3ODg0N30.xi7bK0WbkkE1AX4l6czbnTozTjvUZTwqixMZ-b6Z0q8';
-const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const $ = id => document.getElementById(id);
-const fmt = n => Number(n).toLocaleString('en',{maximumFractionDigits:2});
-const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const label = {pending:'စောင့်ဆိုင်း',done:'ပြီးစီး',rejected:'ပယ်ချ'};
+const SUPABASE_URL='https://cegxxtfwphzpxeqsufqr.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZ3h4dGZ3cGh6cHhlcXN1ZnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU0MDI4NDcsImV4cCI6MjExMDk3ODg0N30.xi7bK0WbkkE1AX4l6czbnTozTjvUZTwqixMZ-b6Z0q8';
+const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const dark=matchMedia('(prefers-color-scheme:dark)').matches;
+const S=Swal.mixin({confirmButtonColor:'#0b5d55',cancelButtonColor:'#6b7f7c',heightAuto:false,background:dark?'#13211f':'#fff',color:dark?'#e9f3f1':'#0f2f2c'});
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n).toLocaleString('en',{maximumFractionDigits:2});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const label={pending:'စောင့်ဆိုင်း',done:'ပြီးစီး',rejected:'ပယ်ချ'};
+const toast=(icon,title)=>S.fire({toast:true,position:'top',icon,title,timer:1800,showConfirmButton:false});
+const copy=t=>{navigator.clipboard?.writeText(t);toast('success','ကူးပြီးပါပြီ')};
+const rnd=()=>Array.from(crypto.getRandomValues(new Uint8Array(12)),x=>x.toString(16).padStart(2,'0')).join('');
+let F='pending';
 
+async function compress(f){try{const bm=await createImageBitmap(f),k=Math.min(1,1400/Math.max(bm.width,bm.height)),c=document.createElement('canvas');
+ c.width=Math.round(bm.width*k);c.height=Math.round(bm.height*k);c.getContext('2d').drawImage(bm,0,0,c.width,c.height);
+ return await new Promise(r=>c.toBlob(b=>r(b||f),'image/jpeg',.82))}catch(e){return f}}
+
+/* ---------- login + 2-step ---------- */
 async function login(){
- let error;try{({error}=await db.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value}))}catch(e){error=e}
- $('lerr').textContent=error?error.message:'';if(!error)start();}
-async function diag(){
- const out=[];const log=t=>{out.push(t);$('dg').textContent=out.join('\n')};
- log('URL: '+SUPABASE_URL);log('key: '+SUPABASE_ANON_KEY.slice(0,14)+'… ('+SUPABASE_ANON_KEY.length+' chars)');log('online: '+navigator.onLine);
- for(const path of ['/auth/v1/health','/rest/v1/rates?select=id']){
-  try{const r=await fetch(SUPABASE_URL+path,{headers:{apikey:SUPABASE_ANON_KEY}});log(path+' -> HTTP '+r.status)}
-  catch(e){log(path+' -> '+e.name+': '+e.message)}}
+ const email=$('em').value.trim(),password=$('pw').value;if(!email||!password)return;
+ $('lb').disabled=true;
+ try{const {error}=await db.auth.signInWithPassword({email,password});if(error)throw error;await gate()}
+ catch(e){S.fire({icon:'error',title:'Login မအောင်မြင်ပါ',text:e.message})}
+ finally{$('lb').disabled=false}
 }
-async function logout(){await db.auth.signOut();location.reload()}
-async function start(){
- const {data}=await db.auth.getSession();if(!data.session)return;
- $('login').classList.add('hide');$('app').classList.remove('hide');
- loadRates();loadOrders();loadSummary();}
+async function gate(){
+ const {data:s}=await db.auth.getSession();if(!s.session)return;
+ const {data:a}=await db.auth.mfa.getAuthenticatorAssuranceLevel();
+ if(a.currentLevel!=='aal2'){
+  const {data:f}=await db.auth.mfa.listFactors(),tf=(f.totp||[])[0];
+  const ok=tf?await ask(tf.id,'','2-step verification'):await enroll(f);
+  if(!ok)return;
+ }
+ start();
+}
+async function ask(factorId,html,title,onOpen){
+ for(;;){
+  const r=await S.fire({title,html,input:'text',inputAttributes:{inputmode:'numeric',maxlength:6,autocomplete:'one-time-code'},inputPlaceholder:'000000',
+   confirmButtonText:'Verify',showCancelButton:true,cancelButtonText:'Logout',allowOutsideClick:false,didOpen:onOpen,
+   inputValidator:v=>/^\d{6}$/.test((v||'').trim())?undefined:'ဂဏန်း ၆ လုံး ထည့်ပါ'});
+  if(r.isDismissed){await db.auth.signOut();location.reload();return false}
+  const {error}=await db.auth.mfa.challengeAndVerify({factorId,code:r.value.trim()});
+  if(!error)return true;
+  await S.fire({icon:'error',title:'Code မှားနေပါသည်',text:error.message,timer:2000,showConfirmButton:false});
+ }
+}
+async function enroll(f){
+ for(const x of (f.all||[]).filter(x=>x.status!=='verified'))await db.auth.mfa.unenroll({factorId:x.id});
+ const {data,error}=await db.auth.mfa.enroll({factorType:'totp',friendlyName:'admin-'+Date.now()});
+ if(error){await S.fire({icon:'error',title:'2-step ဖွင့်မရပါ',text:error.message});return false}
+ const html=`<p class="sw">Google Authenticator (သို့) Authy နဲ့ QR ကို scan လုပ်ပြီး ပေါ်လာတဲ့ code ကို ထည့်ပါ</p><img id="qr" width="190" height="190" alt="QR"><p class="sw">Scan မရရင် ဒီ key ကို ကိုယ်တိုင်ထည့်ပါ<br><code>${esc(data.totp.secret)}</code></p>`;
+ return ask(data.id,html,'2-step verification ဖွင့်ရန်',()=>{$('qr').src=data.totp.qr_code});
+}
+function start(){$('login').classList.add('hide');$('app').classList.remove('hide');loadRates();refresh()}
+async function refresh(){await Promise.all([loadOrders(),loadSummary()])}
 
+/* ---------- rates ---------- */
 async function loadRates(){
  const {data}=await db.from('rates').select('*').eq('id',1).single();if(!data)return;
  $('r_a').value=data.give_rate;$('r_b').value=data.take_rate;$('r_e').value=data.border_rate;$('r_f').value=data.min_mmk;
- $('r_c').value=data.pay_thb;$('r_d').value=data.pay_mmk;}
+ $('r_c').value=data.pay_thb;$('r_d').value=data.pay_mmk}
 async function saveRates(){
- $('rmsg').textContent='...';
- const {data:ses}=await db.auth.getSession();
- if(!ses.session){alert('Login သက်တမ်းကုန်သွားပါပြီ၊ ပြန် login ဝင်ပါ');return}
  const {data,error}=await db.from('rates').update({give_rate:+$('r_a').value,take_rate:+$('r_b').value,border_rate:+$('r_e').value,min_mmk:+$('r_f').value,
   pay_thb:$('r_c').value,pay_mmk:$('r_d').value,updated_at:new Date().toISOString()}).eq('id',1).select();
- const msg=error?'မအောင်မြင်: '+error.message:(!data||!data.length?'မအောင်မြင်: ပြင်ခွင့်မရှိပါ (0 rows)':'သိမ်းပြီးပါပြီ ✓');
- $('rmsg').textContent=msg;alert(msg);}
+ if(error||!data||!data.length)return S.fire({icon:'error',title:'မအောင်မြင်ပါ',text:error?error.message:'ပြင်ခွင့်မရှိပါ (0 rows)'});
+ toast('success','သိမ်းပြီးပါပြီ')}
 
+/* ---------- summary ---------- */
 async function loadSummary(){
  const s=new Date();s.setHours(0,0,0,0);
  const {data}=await db.from('orders').select('direction,send_amount,receive_amount,status').gte('created_at',s.toISOString());
  const all=data||[],d=all.filter(o=>o.status==='done');
- const sum=(a,dir,k)=>a.filter(o=>o.direction===dir).reduce((t,o)=>t+Number(o[k]),0);
- $('sum').innerHTML=[
-  ['Order စုစုပေါင်း',all.length],['စောင့်ဆိုင်း',all.filter(o=>o.status==='pending').length],['ပြီးစီး',d.length],
-  ['လက်ခံရ THB',fmt(sum(d,'THB_MMK','send_amount'))],['ပေးချေ MMK',fmt(sum(d,'THB_MMK','receive_amount'))],
-  ['လက်ခံရ MMK',fmt(sum(d,'MMK_THB','send_amount'))],['ပေးချေ THB',fmt(sum(d,'MMK_THB','receive_amount'))]
- ].map(([k,v])=>`<div class="stat"><span>${k}</span><b>${v}</b></div>`).join('');}
+ const sum=(dir,k)=>d.filter(o=>o.direction===dir).reduce((t,o)=>t+Number(o[k]),0);
+ $('sum').innerHTML=[['Order စုစုပေါင်း',all.length],['စောင့်ဆိုင်း',all.filter(o=>o.status==='pending').length],['ပြီးစီး',d.length],
+  ['လက်ခံရ THB',fmt(sum('THB_MMK','send_amount'))],['ပေးချေ MMK',fmt(sum('THB_MMK','receive_amount'))],
+  ['လက်ခံရ MMK',fmt(sum('MMK_THB','send_amount'))],['ပေးချေ THB',fmt(sum('MMK_THB','receive_amount'))]
+ ].map(([k,v])=>`<div class="stat"><span>${k}</span><b>${v}</b></div>`).join('')}
+
+/* ---------- orders ---------- */
+async function viewImg(bucket,path){
+ const u=bucket==='slips'?(await db.storage.from('slips').createSignedUrl(path,300)).data?.signedUrl:db.storage.from('payouts').getPublicUrl(path).data.publicUrl;
+ if(!u)return toast('error','Slip မတွေ့ပါ');
+ S.fire({html:'<img id="vi" style="max-width:100%;border-radius:10px" alt="">',didOpen:()=>{$('vi').src=u},showConfirmButton:false,showCloseButton:true})}
 
 async function loadOrders(){
  let q=db.from('orders').select('*').order('created_at',{ascending:false}).limit(100);
- if($('flt').value!=='all')q=q.eq('status',$('flt').value);
+ if(F!=='all')q=q.eq('status',F);
  const {data,error}=await q;
  if(error){$('list').textContent=error.message;return}
- $('list').innerHTML=data.length?'':'<p>Order မရှိပါ</p>';
+ $('list').innerHTML=data.length?'':'<p class="hint">Order မရှိပါ</p>';
  for(const o of data){
   const [a,b]=o.direction==='THB_MMK'?['THB','MMK']:['MMK','THB'];
-  const el=document.createElement('div');el.className='card order';
-  el.innerHTML=`<div class="row" style="justify-content:space-between"><b>${esc(o.order_no)}</b><span class="badge ${o.status}">${label[o.status]}</span></div>
-   <div>${fmt(o.send_amount)} ${a} → <b>${fmt(o.receive_amount)} ${b}</b> (rate ${fmt(o.rate)})</div>
-   <div>${esc(o.name)} · ${esc(o.phone)}</div>
-   <div>လက်ခံ: ${esc(o.receive_method)} – ${esc(o.receive_account)}</div>
-   <div class="slip"></div>
-   <label>Note (customer ကို ပြမယ်)</label><input class="note" value="${esc(o.note)}">
-   <div class="row" style="margin-top:8px"><button class="alt" data-a="slip">Slip ကြည့်</button>
-    <button data-a="done">အတည်ပြု</button><button class="no" data-a="rejected">ပယ်ချ</button></div>`;
-  el.querySelector('[data-a=slip]').onclick=async()=>{
-   const {data:u}=await db.storage.from('slips').createSignedUrl(o.slip_path,300);
-   el.querySelector('.slip').innerHTML=u?`<img src="${u.signedUrl}" alt="slip">`:'Slip မတွေ့ပါ'};
-  for(const st of ['done','rejected'])el.querySelector(`[data-a=${st}]`).onclick=async()=>{
-   if(!confirm(`${o.order_no} ကို ${label[st]} လုပ်မလား?`))return;
-   const {data:r,error:e}=await db.from('orders').update({status:st,note:el.querySelector('.note').value||null}).eq('id',o.id).select();
-   if(e||!r||!r.length){alert('မအောင်မြင်: '+(e?e.message:'ပြင်ခွင့်မရှိပါ'));return}
-   loadOrders();loadSummary();};
-  $('list').appendChild(el);}
+  const el=document.createElement('article');el.className='oc';
+  const tm=new Date(o.created_at).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  const pu=o.payout_slip_path?db.storage.from('payouts').getPublicUrl(o.payout_slip_path).data.publicUrl:'';
+  el.innerHTML=`<div class="oh"><b>${esc(o.order_no)}</b><span class="badge ${o.status}">${label[o.status]}</span><time>${tm}</time></div>
+   <div class="flow"><span>${fmt(o.send_amount)} <i>${a}</i></span><em>→</em><span class="rx">${fmt(o.receive_amount)} <i>${b}</i></span></div>
+   <dl><div><dt>အမည်</dt><dd>${esc(o.name)}</dd></div>
+   <div><dt>ဖုန်း</dt><dd><a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></dd></div>
+   <div><dt>လက်ခံမယ့်</dt><dd>${esc(o.receive_method)} · <b>${esc(o.receive_account)}</b> <button class="mini" data-a="cp">ကူး</button></dd></div>
+   ${o.note?`<div><dt>Note</dt><dd>${esc(o.note)}</dd></div>`:''}</dl>
+   ${pu?`<div class="pt"><img src="${encodeURI(pu)}" alt="payout slip" data-a="pv"></div>`:''}
+   <div class="acts"><button class="ghost" data-a="slip">Customer slip ကြည့်</button>
+   ${o.status==='pending'?'<button class="btn" data-a="ok">ငွေပြန်လွှဲပြီး slip ပို့မယ်</button><button class="btn bad" data-a="no">ပယ်ချ</button>':''}</div>`;
+  const on=(k,fn)=>{const e=el.querySelector(`[data-a=${k}]`);if(e)e.onclick=fn};
+  on('cp',()=>copy(o.receive_account));on('slip',()=>viewImg('slips',o.slip_path));on('pv',()=>viewImg('payouts',o.payout_slip_path));
+  on('ok',()=>complete(o));on('no',()=>reject(o));
+  $('list').appendChild(el)}
 }
+async function complete(o){
+ const cur=o.direction==='THB_MMK'?'MMK':'THB';
+ const {value:v}=await S.fire({title:'ငွေပြန်လွှဲ slip ပို့မယ်',
+  html:`<p class="sw">${esc(o.receive_method)} · <b>${esc(o.receive_account)}</b><br><b>${fmt(o.receive_amount)} ${cur}</b> လွှဲပြီးကြောင်း slip တင်ပါ</p><input id="swf" type="file" accept="image/*" class="swal2-file"><textarea id="swn" class="swal2-textarea" placeholder="Note (customer ကို ပြမယ်၊ မဖြည့်လည်းရ)"></textarea>`,
+  showCancelButton:true,confirmButtonText:'ပြီးစီးကြောင်း အတည်ပြု',cancelButtonText:'မလုပ်တော့ပါ',
+  preConfirm:()=>{const f=$('swf').files[0];if(!f){Swal.showValidationMessage('ငွေပြန်လွှဲ slip ဓာတ်ပုံ ရွေးပါ');return false}return {f,n:$('swn').value.trim()}}});
+ if(!v)return;
+ S.fire({title:'တင်နေသည်...',allowOutsideClick:false,showConfirmButton:false,didOpen:()=>Swal.showLoading()});
+ try{
+  const b=await compress(v.f),path=`${o.order_no}-${rnd()}.jpg`;
+  const up=await db.storage.from('payouts').upload(path,b,{contentType:b.type||'image/jpeg'});
+  if(up.error)throw new Error('slip: '+up.error.message);
+  const {data,error}=await db.from('orders').update({status:'done',payout_slip_path:path,note:v.n||null}).eq('id',o.id).select();
+  if(error||!data.length)throw new Error(error?error.message:'ပြင်ခွင့်မရှိပါ');
+  await refresh();toast('success','ပြီးစီးပါပြီ၊ customer မြင်ရပါပြီ');
+ }catch(e){S.fire({icon:'error',title:'မအောင်မြင်ပါ',text:e.message})}
+}
+async function reject(o){
+ const r=await S.fire({title:`${o.order_no} ကို ပယ်ချမလား?`,input:'text',inputPlaceholder:'အကြောင်းရင်း (customer ကို ပြမယ်)',showCancelButton:true,confirmButtonText:'ပယ်ချမယ်',cancelButtonText:'မလုပ်တော့ပါ',confirmButtonColor:'#c0392b'});
+ if(!r.isConfirmed)return;
+ const {data,error}=await db.from('orders').update({status:'rejected',note:(r.value||'').trim()||null}).eq('id',o.id).select();
+ if(error||!data.length)return S.fire({icon:'error',title:'မအောင်မြင်ပါ',text:error?error.message:'ပြင်ခွင့်မရှိပါ'});
+ await refresh();toast('success','ပယ်ချပြီးပါပြီ')}
 
-start();
+$('lb').onclick=login;$('pw').onkeydown=e=>{if(e.key==='Enter')login()};
+$('lo').onclick=async()=>{await db.auth.signOut();location.reload()};
+$('rf').onclick=refresh;$('sv').onclick=saveRates;
+document.querySelectorAll('#flt button').forEach(b=>b.onclick=()=>{F=b.dataset.f;document.querySelectorAll('#flt button').forEach(x=>x.classList.toggle('on',x===b));loadOrders()});
+gate();
 </script>
 </body>
 </html>
