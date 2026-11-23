@@ -47,6 +47,12 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
 .badge{display:inline-block;padding:1px 10px;border-radius:99px;font-weight:700;font-size:.78rem}
 .pending{background:#fff1cf;color:#7a5200}.done{background:#d3f2e3;color:#0a5c3a}.rejected{background:#fcdcd9;color:#8a1c14}
 .pt img{height:64px;border-radius:8px;border:1px solid var(--line);cursor:pointer;margin-top:6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.days{overflow-x:auto;margin-top:12px;border:1px solid var(--line);border-radius:12px;background:var(--s)}
+.days table{width:100%;border-collapse:collapse;font-size:.82rem;white-space:nowrap}
+.days th{color:var(--mut);font-weight:600;font-size:.72rem;text-align:right;padding:7px 10px;border-bottom:1px solid var(--line)}
+.days td{text-align:right;padding:7px 10px;border-top:1px solid var(--line)}
+.days th:first-child,.days td:first-child{text-align:left;position:sticky;left:0;background:var(--s)}
 .swal2-popup{font-family:var(--f)}.sw{color:var(--mut);margin:6px 0}code{word-break:break-all;font-size:.85rem}
 </style>
 </head>
@@ -59,7 +65,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
 </div></div></div>
 
 <div id="app" class="hide">
- <header class="bar"><div class="brand"><span class="mark">฿K</span><span>Admin <small>v6</small></span></div><button class="ghost" id="lo">Logout</button></header>
+ <header class="bar"><div class="brand"><span class="mark">฿K</span><span>Admin <small>v7</small></span></div><button class="ghost" id="lo">Logout</button></header>
  <nav class="tabs" id="tabs"><button data-p="po" class="on">Orders<i id="c_p"></i></button><button data-p="ps">စာရင်းချုပ်</button><button data-p="pr">Rate</button></nav>
  <main>
   <section id="po">
@@ -71,7 +77,11 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
     <button class="ghost" id="rf">↻</button></div>
    <div id="list"></div>
   </section>
-  <section id="ps" hidden><p class="hint">ယနေ့ — ပြီးစီးပြီးသား order များ</p><div class="grid" id="sum"></div></section>
+  <section id="ps" hidden>
+   <div class="chips" id="qd"><button data-q="0" class="on">ယနေ့</button><button data-q="1">မနေ့က</button><button data-q="7">၇ ရက်</button><button data-q="m">ဒီလ</button></div>
+   <div class="two"><div><label>မှ</label><input id="d1" type="date"></div><div><label>အထိ</label><input id="d2" type="date"></div></div>
+   <p class="hint" id="sh" style="margin-top:10px"></p>
+   <div class="grid" id="sum"></div><div id="days"></div></section>
   <section id="pr" hidden><p class="hint">ကျပ် ၁ သိန်းလျှင် ဘတ်</p>
    <div class="grid">
     <div><label>နယ်စပ်ပေါက်ဈေး</label><input id="r_e" type="number" step="any"></div>
@@ -164,15 +174,27 @@ async function saveRates(){
  toast('success','သိမ်းပြီးပါပြီ')}
 
 /* ---------- summary ---------- */
+const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+function quick(q){const t=new Date(),a=new Date(t);
+ if(q==='1')a.setDate(t.getDate()-1);else if(q==='7')a.setDate(t.getDate()-6);else if(q==='m')a.setDate(1);
+ $('d1').value=ymd(a);$('d2').value=ymd(q==='1'?a:t)}
 async function loadSummary(){
- const s=new Date();s.setHours(0,0,0,0);
- const {data}=await db.from('orders').select('direction,send_amount,receive_amount,status').gte('created_at',s.toISOString());
+ if(!$('d1').value||!$('d2').value)quick('0');
+ let d1=$('d1').value,d2=$('d2').value;if(d1>d2){[d1,d2]=[d2,d1]}
+ const from=new Date(d1+'T00:00:00'),to=new Date(d2+'T00:00:00');to.setDate(to.getDate()+1);
+ const {data,error}=await db.from('orders').select('direction,send_amount,receive_amount,status,created_at').gte('created_at',from.toISOString()).lt('created_at',to.toISOString()).limit(1000);
+ if(error){$('sum').textContent=error.message;return}
  const all=data||[],d=all.filter(o=>o.status==='done');
- const sum=(dir,k)=>d.filter(o=>o.direction===dir).reduce((t,o)=>t+Number(o[k]),0);
- $('sum').innerHTML=[['Order စုစုပေါင်း',all.length],['စောင့်ဆိုင်း',all.filter(o=>o.status==='pending').length],['ပြီးစီး',d.length],
-  ['လက်ခံရ THB',fmt(sum('THB_MMK','send_amount'))],['ပေးချေ MMK',fmt(sum('THB_MMK','receive_amount'))],
-  ['လက်ခံရ MMK',fmt(sum('MMK_THB','send_amount'))],['ပေးချေ THB',fmt(sum('MMK_THB','receive_amount'))]
- ].map(([k,v])=>`<div class="stat"><span>${k}</span><b>${v}</b></div>`).join('')}
+ const sum=(a,dir,k)=>a.filter(o=>o.direction===dir).reduce((t,o)=>t+Number(o[k]),0);
+ $('sh').textContent=(d1===d2?d1:`${d1} → ${d2}`)+' · ပြီးစီးပြီးသား order များ'+(all.length>=1000?' (ပထမ ၁၀၀၀ ခုသာ)':'');
+ $('sum').innerHTML=[['Order စုစုပေါင်း',all.length],['စောင့်ဆိုင်း',all.filter(o=>o.status==='pending').length],['ပြီးစီး',d.length],['ပယ်ချ',all.filter(o=>o.status==='rejected').length],
+  ['လက်ခံရ THB',fmt(sum(d,'THB_MMK','send_amount'))],['ပေးချေ MMK',fmt(sum(d,'THB_MMK','receive_amount'))],
+  ['လက်ခံရ MMK',fmt(sum(d,'MMK_THB','send_amount'))],['ပေးချေ THB',fmt(sum(d,'MMK_THB','receive_amount'))]
+ ].map(([k,v])=>`<div class="stat"><span>${k}</span><b>${v}</b></div>`).join('');
+ if(d1===d2||!d.length){$('days').innerHTML='';return}
+ const by={};for(const o of d){const k=ymd(new Date(o.created_at));(by[k]=by[k]||[]).push(o)}
+ $('days').innerHTML='<div class="days"><table><tr><th>ရက်စွဲ</th><th>Order</th><th>THB ဝင်</th><th>MMK ထွက်</th><th>MMK ဝင်</th><th>THB ထွက်</th></tr>'+
+  Object.keys(by).sort().reverse().map(k=>{const a=by[k];return `<tr><td>${k.slice(5)}</td><td>${a.length}</td><td>${fmt(sum(a,'THB_MMK','send_amount'))}</td><td>${fmt(sum(a,'THB_MMK','receive_amount'))}</td><td>${fmt(sum(a,'MMK_THB','send_amount'))}</td><td>${fmt(sum(a,'MMK_THB','receive_amount'))}</td></tr>`}).join('')+'</table></div>'}
 
 /* ---------- orders ---------- */
 async function viewImg(bucket,path){
@@ -232,6 +254,8 @@ $('lb').onclick=login;$('pw').onkeydown=e=>{if(e.key==='Enter')login()};
 $('lo').onclick=async()=>{await db.auth.signOut();location.reload()};
 $('rf').onclick=refresh;$('sv').onclick=saveRates;
 document.querySelectorAll('#flt button').forEach(b=>b.onclick=()=>{F=b.dataset.f;document.querySelectorAll('#flt button').forEach(x=>x.classList.toggle('on',x===b));loadOrders()});
+document.querySelectorAll('#qd button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#qd button').forEach(x=>x.classList.toggle('on',x===b));quick(b.dataset.q);loadSummary()});
+['d1','d2'].forEach(i=>$(i).onchange=()=>{document.querySelectorAll('#qd button').forEach(x=>x.classList.remove('on'));loadSummary()});
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));
  ['po','ps','pr'].forEach(id=>$(id).hidden=id!==b.dataset.p)});
 gate();
