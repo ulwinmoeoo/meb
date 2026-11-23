@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ဘတ် ↔ ကျပ် ငွေလွှဲ</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💱</text></svg>">
+<style>
+:root{--bg:#f6f4ee;--card:#fff;--ink:#1d2a2a;--mut:#667;--line:#ddd8c9;--acc:#0f6b5c;--acc2:#e8a33d;--bad:#b3261e;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#121a19;--card:#1b2625;--ink:#eef2ef;--mut:#9aa8a5;--line:#2f3d3b;--acc:#43c0a8;--acc2:#e8a33d;--bad:#ff8a80;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans Myanmar","Padauk","Myanmar Text",system-ui,sans-serif}
+main{max-width:520px;margin:0 auto;padding:16px 16px 48px}
+header{display:flex;justify-content:space-between;align-items:center;margin:8px 0 16px}
+h1{font-size:1.3rem;margin:0}
+.lang button{border:1px solid var(--line);background:none;color:var(--ink);padding:4px 10px;border-radius:6px;cursor:pointer}
+.rate{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.rate div{background:var(--acc);color:#fff;border-radius:10px;padding:10px 12px}
+.rate b{display:block;font-size:1.25rem}
+@media(prefers-color-scheme:dark){.rate div{color:#0b1514}}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+h2{font-size:1.05rem;margin:0 0 10px}
+label{display:block;font-size:.9rem;color:var(--mut);margin:10px 0 4px}
+input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--acc2);outline-offset:1px}
+.btn{width:100%;margin-top:14px;padding:12px;border:0;border-radius:8px;background:var(--acc);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+@media(prefers-color-scheme:dark){.btn{color:#0b1514}}
+.btn:disabled{opacity:.5}
+.result{margin-top:10px;font-size:1.1rem}
+.pay{background:var(--bg);border-left:4px solid var(--acc2);padding:8px 12px;margin-top:10px;white-space:pre-wrap;font-size:.92rem}
+.msg{margin-top:10px;padding:10px;border-radius:8px;background:var(--bg)}
+.err{color:var(--bad)}
+.badge{display:inline-block;padding:2px 10px;border-radius:99px;font-weight:600}
+.pending{background:#fff1cf;color:#7a5200}.done{background:#d6f3e6;color:#0a5c3a}.rejected{background:#fcdcd9;color:#8a1c14}
+</style>
+</head>
+<body>
+<main>
+<header><h1 id="t_title"></h1><span class="lang"><button onclick="setLang('my')">မြန်မာ</button> <button onclick="setLang('en')">EN</button></span></header>
+
+<div class="rate"><div><span id="t_r1"></span><b id="r1">–</b></div><div><span id="t_r2"></span><b id="r2">–</b></div></div>
+
+<section>
+<h2 id="t_new"></h2>
+<label id="t_dir"></label>
+<select id="dir"><option value="THB_MMK">THB → MMK</option><option value="MMK_THB">MMK → THB</option></select>
+<label id="t_amt"></label>
+<input id="amt" type="number" inputmode="decimal" min="0" placeholder="0">
+<div class="result" id="calc"></div>
+<div class="pay" id="pay"></div>
+<label id="t_name"></label><input id="name" autocomplete="name">
+<label id="t_phone"></label><input id="phone" type="tel" autocomplete="tel">
+<label id="t_method"></label>
+<select id="method"></select>
+<label id="t_acc"></label><input id="acc">
+<label id="t_slip"></label><input id="slip" type="file" accept="image/*">
+<button class="btn" id="submit" onclick="submitOrder()"></button>
+<div id="out"></div>
+</section>
+
+<section>
+<h2 id="t_check"></h2>
+<input id="ono" placeholder="TM-XXXXXX" style="text-transform:uppercase">
+<button class="btn" onclick="checkOrder()" id="t_checkbtn"></button>
+<div id="status"></div>
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const SUPABASE_URL = 'https://cegxxtfwphzpxeqsufqr.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_mdvM-RWMBZiFL0_fETGXYg_9KHldBuU';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const T = {
+ my:{title:'ဘတ် ↔ ကျပ် ငွေလွှဲ',r1:'THB 1 လွှဲရင် ရမယ့်ငွေ',r2:'THB 1 ရဖို့ လိုတဲ့ကျပ်',new:'ငွေလွှဲမှု အသစ်',dir:'လွှဲမယ့်ဘက်',amt:'ပေးပို့မယ့် ပမာဏ',
+  name:'သင့်အမည်',phone:'ဖုန်းနံပါတ်',method:'လက်ခံမယ့်နည်းလမ်း',acc:'လက်ခံမယ့် အကောင့်/နံပါတ်',slip:'ငွေလွှဲပြီးကြောင်း slip ဓာတ်ပုံ',submit:'Order တင်မယ်',
+  check:'Order အခြေအနေစစ်ရန်',checkbtn:'စစ်မယ်',get:'သင်ရမယ့်ငွေ',payto:'ဒီအကောင့်ကို အရင်လွှဲပါ',
+  fill:'အချက်အလက်အားလုံး ဖြည့်ပြီး slip တင်ပါ',ok:'Order တင်ပြီးပါပြီ။ သင့် Order နံပါတ်',keep:'(မှတ်ထားပါ)',
+  pending:'စောင့်ဆိုင်းနေသည်',done:'ပြီးစီးပါပြီ',rejected:'ပယ်ချခံရသည်',nf:'Order မတွေ့ပါ',fail:'မအောင်မြင်ပါ၊ ပြန်ကြိုးစားပါ'},
+ en:{title:'THB ↔ MMK Transfer',r1:'Receive per THB 1 sent',r2:'MMK needed per THB 1',new:'New transfer',dir:'Direction',amt:'Amount to send',
+  name:'Your name',phone:'Phone number',method:'Receive via',acc:'Receiving account / number',slip:'Payment slip photo',submit:'Place order',
+  check:'Check order status',checkbtn:'Check',get:'You receive',payto:'Send your money to this account first',
+  fill:'Fill in everything and attach the slip',ok:'Order placed. Your order number',keep:'(keep it)',
+  pending:'Pending',done:'Completed',rejected:'Rejected',nf:'Order not found',fail:'Failed, please try again'}
+};
+const M = {THB_MMK:['KPay','Wave Pay','AYA Pay','Bank'],MMK_THB:['PromptPay','Thai bank account']};
+let L = localStorage.getItem('lang') || 'my', R = null;
+const $ = id => document.getElementById(id);
+const fmt = n => Number(n).toLocaleString('en',{maximumFractionDigits:2});
+
+function setLang(l){L=l;try{localStorage.setItem('lang',l)}catch(e){}
+ document.documentElement.lang=l;const t=T[l];
+ [['title'],['r1'],['r2'],['new'],['dir'],['amt'],['name'],['phone'],['method'],['acc'],['slip'],['check']].forEach(([k])=>{const e=$('t_'+(k==='r1'||k==='r2'?k:k));if(e)e.textContent=t[k]});
+ $('submit').textContent=t.submit;$('t_checkbtn').textContent=t.checkbtn;calc();}
+
+function fillMethods(){$('method').innerHTML=M[$('dir').value].map(m=>`<option>${m}</option>`).join('')}
+
+function calc(){
+ if(!R)return;const d=$('dir').value,a=parseFloat($('amt').value)||0;
+ const get=d==='THB_MMK'?a*R.thb_to_mmk:a/R.mmk_to_thb;
+ $('calc').textContent=a>0?`${T[L].get}: ${fmt(get)} ${d==='THB_MMK'?'MMK':'THB'}`:'';
+ $('pay').textContent=`${T[L].payto}\n${d==='THB_MMK'?R.pay_thb:R.pay_mmk}`;
+ return get;}
+
+async function load(){
+ const {data}=await db.from('rates').select('*').eq('id',1).single();
+ if(data){R=data;$('r1').textContent=fmt(R.thb_to_mmk)+' MMK';$('r2').textContent=fmt(R.mmk_to_thb)+' MMK';calc();}}
+
+async function submitOrder(){
+ const t=T[L],d=$('dir').value,a=parseFloat($('amt').value),f=$('slip').files[0];
+ const v=['name','phone','acc'].map(i=>$(i).value.trim());
+ if(!(a>0)||v.some(x=>!x)||!f){$('out').innerHTML=`<div class="msg err">${t.fill}</div>`;return}
+ $('submit').disabled=true;
+ const no='TM-'+Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b%32]).join('');
+ const ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');
+ const path=`${no}.${ext}`;
+ const up=await db.storage.from('slips').upload(path,f,{contentType:f.type});
+ if(up.error){$('out').innerHTML=`<div class="msg err">${t.fail}</div>`;$('submit').disabled=false;return}
+ const rate=d==='THB_MMK'?R.thb_to_mmk:R.mmk_to_thb;
+ const {error}=await db.from('orders').insert({order_no:no,direction:d,send_amount:a,receive_amount:calc(),rate,
+   name:v[0],phone:v[1],receive_method:$('method').value,receive_account:v[2],slip_path:path});
+ $('submit').disabled=false;
+ if(error){$('out').innerHTML=`<div class="msg err">${t.fail}</div>`;return}
+ $('out').innerHTML=`<div class="msg">${t.ok}: <b>${no}</b> ${t.keep}</div>`;$('ono').value=no;
+}
+
+async function checkOrder(){
+ const t=T[L],no=$('ono').value.trim().toUpperCase();if(!no)return;
+ const {data}=await db.rpc('get_order_status',{p_order_no:no});
+ const o=data&&data[0];
+ $('status').innerHTML=o?`<div class="msg"><span class="badge ${o.status}">${t[o.status]}</span>
+  <div>${fmt(o.send_amount)} ${o.direction==='THB_MMK'?'THB':'MMK'} → ${fmt(o.receive_amount)} ${o.direction==='THB_MMK'?'MMK':'THB'}</div>
+  ${o.note?`<div></div>`:''}</div>`:`<div class="msg err">${t.nf}</div>`;
+ if(o&&o.note)$('status').querySelector('.msg div:last-child').textContent=o.note;
+}
+
+$('dir').onchange=()=>{fillMethods();calc()};$('amt').oninput=calc;
+fillMethods();setLang(L);load();
+</script>
+</body>
+</html>
