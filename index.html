@@ -6,9 +6,9 @@
 <title>ဘတ် ⇄ ကျပ် ငွေလွှဲ</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23f2b705%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-weight=%22800%22>฿K</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;700&family=Noto+Sans+Thai:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--f:"Plus Jakarta Sans","Noto Sans Myanmar","Padauk","Myanmar Text",system-ui,sans-serif;--bg:#f6f7f6;--s:#fff;--ink:#14201e;--mut:#6b7c79;--line:#e0e7e5;--p:#0b5d55;--on:#fff;--g:#f2b705;color-scheme:light}
+:root{--f:"Plus Jakarta Sans","Noto Sans Myanmar","Noto Sans Thai","Padauk","Myanmar Text",system-ui,sans-serif;--bg:#f6f7f6;--s:#fff;--ink:#14201e;--mut:#6b7c79;--line:#e0e7e5;--p:#0b5d55;--on:#fff;--g:#f2b705;color-scheme:light}
 @media(prefers-color-scheme:dark){:root{--bg:#0d1716;--s:#15221f;--ink:#e9f3f1;--mut:#8fa8a4;--line:#26393a;--p:#3cd0be;--on:#06201d;color-scheme:dark}}
 *{box-sizing:border-box}[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f);font-variant-numeric:tabular-nums;-webkit-text-size-adjust:100%}
@@ -16,9 +16,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f);font
 header{display:flex;justify-content:space-between;align-items:center}
 .brand{display:flex;align-items:center;gap:9px;font-weight:700}
 .mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--g);color:#2a2000;font:800 .72rem var(--f)}
-.lang{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
-.lang button{border:0;background:none;color:var(--mut);padding:4px 10px;font:inherit;font-size:.8rem;cursor:pointer}
-.lang .on{background:var(--p);color:var(--on);font-weight:700}
+.lgbox{position:relative}.fl{font-size:1.05rem;line-height:1}
+.lgb{display:flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--s);color:var(--mut);padding:4px 10px;border-radius:9px;font:inherit;font-size:.8rem;cursor:pointer}
+.lgm{position:absolute;right:0;top:calc(100% + 6px);background:var(--s);border:1px solid var(--line);border-radius:12px;padding:4px;min-width:140px;z-index:30;box-shadow:0 10px 26px -12px rgba(0,0,0,.35)}
+.lgm button{display:flex;align-items:center;gap:9px;width:100%;border:0;background:none;color:var(--ink);padding:8px 10px;border-radius:8px;font:inherit;cursor:pointer;text-align:left}.lgm button:hover{background:var(--bg)}
 .rates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .rates>div{background:var(--s);border:1px solid var(--line);border-radius:12px;padding:7px 12px}
 .rates small{display:block;color:var(--mut);font-size:.74rem}.rates b{font:800 1.45rem/1.25 var(--f);color:var(--p)}
@@ -55,7 +56,7 @@ input:focus,select:focus{outline:0;border-color:var(--p)}
 <body>
 <div class="app">
 <header><div class="brand"><span class="mark">฿K</span><span data-t="title"></span></div>
- <div class="lang"><button data-l="my">မြန်မာ</button><button data-l="en">EN</button></div></header>
+ <div class="lgbox"></div></header>
 <div class="rates"><div><small data-t="r1"></small><b id="r1">–</b></div><div><small data-t="r2"></small><b id="r2">–</b></div></div>
 <p class="sub" id="minnote"></p>
 <nav class="tabs" id="tabs"><button data-p="p1" class="on" data-t="tab1"></button><button data-p="p2" data-t="tab2"></button></nav>
@@ -77,7 +78,7 @@ input:focus,select:focus{outline:0;border-color:var(--p)}
  <div class="row2"><input id="ono" placeholder="TM-XXXXXX" style="text-transform:uppercase"><button class="btn" id="chk" data-t="checkbtn"></button></div>
  <div id="status"></div>
 </section>
-<p class="ver">v6</p>
+<p class="ver">v7</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
@@ -89,19 +90,31 @@ const dark=matchMedia('(prefers-color-scheme:dark)').matches;
 const S=Swal.mixin({confirmButtonColor:'#0b5d55',heightAuto:false,background:dark?'#15221f':'#fff',color:dark?'#e9f3f1':'#14201e'});
 const T={
 my:{title:'ဘတ် ⇄ ကျပ် ငွေလွှဲ',r1:'ဘတ်ပေးရင်',r2:'ဘတ်ပြန်ယူရင်',per:'ကျပ် ၁ သိန်းလျှင် ဘတ်',border:'နယ်စပ်',minnote:'အနည်းဆုံး',min:'ကျပ်',tab1:'ငွေလွှဲမယ်',tab2:'Order စစ်မယ်',amt:'ပေးပို့မယ့် ပမာဏ',get:'သင်ရမယ့်ငွေ',payto:'ဒီအကောင့်ကို အရင်လွှဲပါ',copy:'ကူးယူ',copied:'ကူးပြီးပါပြီ',name:'အမည်',phone:'ဖုန်းနံပါတ်',recv:'ငွေလက်ခံမယ့်နေရာ',acc:'အကောင့်/နံပါတ်',pick:'ငွေလွှဲ slip ဓာတ်ပုံ ရွေးရန်',submit:'Order တင်မယ်',checkbtn:'စစ်မယ်',fill:'အချက်အလက်အားလုံး ဖြည့်ပြီး slip တင်ပါ',ok:'Order တင်ပြီးပါပြီ',keep:'ဒီနံပါတ်ကို မှတ်ထားပါ',pending:'စောင့်ဆိုင်းနေသည်',done:'ပြီးစီးပါပြီ',rejected:'ပယ်ချခံရသည်',nf:'Order မတွေ့ပါ',fail:'မအောင်မြင်ပါ၊ ပြန်ကြိုးစားပါ',minerr:'အနည်းဆုံး ကျပ် {n} ကစပြီး လုပ်ပေးပါမယ်',payout:'ငွေပြန်လွှဲ slip',norate:'Rate မရသေးပါ၊ page ကို refresh လုပ်ပါ',wait:'တင်နေသည်...'},
-en:{title:'THB ⇄ MMK Transfer',r1:'You give THB',r2:'You take THB',per:'THB per MMK 100,000',border:'Border',minnote:'Min',min:'MMK',tab1:'Transfer',tab2:'Check order',amt:'Amount to send',get:'You receive',payto:'Send your money to this account first',copy:'Copy',copied:'Copied',name:'Name',phone:'Phone',recv:'Receive to',acc:'Account / number',pick:'Choose payment slip photo',submit:'Place order',checkbtn:'Check',fill:'Fill in everything and attach the slip',ok:'Order placed',keep:'Keep this number',pending:'Pending',done:'Completed',rejected:'Rejected',nf:'Order not found',fail:'Failed, please try again',minerr:'Minimum is MMK {n}',payout:'Payout slip',norate:'Rates not loaded, please refresh',wait:'Uploading...'}};
+en:{title:'THB ⇄ MMK Transfer',r1:'You give THB',r2:'You take THB',per:'THB per MMK 100,000',border:'Border',minnote:'Min',min:'MMK',tab1:'Transfer',tab2:'Check order',amt:'Amount to send',get:'You receive',payto:'Send your money to this account first',copy:'Copy',copied:'Copied',name:'Name',phone:'Phone',recv:'Receive to',acc:'Account / number',pick:'Choose payment slip photo',submit:'Place order',checkbtn:'Check',fill:'Fill in everything and attach the slip',ok:'Order placed',keep:'Keep this number',pending:'Pending',done:'Completed',rejected:'Rejected',nf:'Order not found',fail:'Failed, please try again',minerr:'Minimum is MMK {n}',payout:'Payout slip',norate:'Rates not loaded, please refresh',wait:'Uploading...'},
+th:{title:'โอนเงิน บาท ⇄ จ๊าต',r1:'เมื่อคุณให้บาท',r2:'เมื่อคุณรับบาท',per:'บาทต่อ 100,000 จ๊าต',border:'ชายแดน',minnote:'ขั้นต่ำ',min:'จ๊าต',tab1:'โอนเงิน',tab2:'ตรวจสอบออเดอร์',amt:'จำนวนเงินที่ต้องการโอน',get:'คุณจะได้รับ',payto:'โอนเงินมาที่บัญชีนี้ก่อน',copy:'คัดลอก',copied:'คัดลอกแล้ว',name:'ชื่อ',phone:'เบอร์โทร',recv:'รับเงินที่',acc:'บัญชี / เบอร์',pick:'เลือกรูปสลิปการโอนเงิน',submit:'สั่งโอนเงิน',checkbtn:'ตรวจสอบ',fill:'กรอกข้อมูลให้ครบและแนบสลิป',ok:'สร้างออเดอร์แล้ว',keep:'กรุณาจดหมายเลขนี้ไว้',pending:'รอดำเนินการ',done:'เสร็จสิ้น',rejected:'ถูกปฏิเสธ',nf:'ไม่พบออเดอร์',fail:'ไม่สำเร็จ กรุณาลองใหม่',minerr:'ขั้นต่ำ {n} จ๊าต',payout:'สลิปการโอนคืน',norate:'ยังไม่ได้โหลดเรท กรุณารีเฟรชหน้า',wait:'กำลังอัปโหลด...'},
+zh:{title:'泰铢 ⇄ 缅币 汇款',r1:'您付泰铢时',r2:'您收泰铢时',per:'每 100,000 缅币对应泰铢',border:'边境',minnote:'最低',min:'缅币',tab1:'汇款',tab2:'查询订单',amt:'汇款金额',get:'您将收到',payto:'请先转账到此账户',copy:'复制',copied:'已复制',name:'姓名',phone:'电话',recv:'收款方式',acc:'账号 / 号码',pick:'选择转账凭证图片',submit:'提交订单',checkbtn:'查询',fill:'请填写全部信息并上传凭证',ok:'订单已提交',keep:'请记住此订单号',pending:'待处理',done:'已完成',rejected:'已拒绝',nf:'未找到订单',fail:'失败，请重试',minerr:'最低 {n} 缅币起',payout:'打款凭证',norate:'汇率未加载，请刷新页面',wait:'上传中...'}};
 const M={THB_MMK:['KPay','Wave Pay','AYA Pay','Bank'],MMK_THB:['PromptPay','Thai bank account']};
-let L='my',R=null,D='THB_MMK';try{L=localStorage.getItem('lang')||'my'}catch(e){}
+const LG={my:{f:'🇲🇲',n:'မြန်မာ'},en:{f:'🇬🇧',n:'English'},th:{f:'🇹🇭',n:'ไทย'},zh:{f:'🇨🇳',n:'中文'}};
+let L='my',R=null,D='THB_MMK';try{const s=localStorage.getItem('lang');if(LG[s])L=s}catch(e){}
 const $=id=>document.getElementById(id),qa=s=>document.querySelectorAll(s);
 const fmt=n=>Number(n).toLocaleString('en',{maximumFractionDigits:2});
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=(icon,title)=>S.fire({toast:true,position:'top',icon,title,timer:1800,showConfirmButton:false});
 
+function mountLang(){
+ qa('.lgbox').forEach(b=>{
+  b.innerHTML=`<button class="lgb" type="button"><span class="fl"></span><span>▾</span></button><div class="lgm" hidden>${Object.entries(LG).map(([k,v])=>`<button type="button" data-l="${k}"><span class="fl">${v.f}</span>${v.n}</button>`).join('')}</div>`;
+  const m=b.querySelector('.lgm');
+  b.firstElementChild.onclick=e=>{e.stopPropagation();m.hidden=!m.hidden};
+  m.onclick=e=>{const x=e.target.closest('[data-l]');if(x)setLang(x.dataset.l)};
+ });
+ document.addEventListener('click',()=>qa('.lgm').forEach(m=>m.hidden=true));
+}
 function setLang(l){L=l;try{localStorage.setItem('lang',l)}catch(e){}
  document.documentElement.lang=l;qa('[data-t]').forEach(e=>e.textContent=T[l][e.dataset.t]);
  qa('[data-ph]').forEach(e=>e.placeholder=T[l][e.dataset.ph]);
- qa('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
- const f=$('slip').files[0];if(f)$('fn').textContent=f.name;note();calc()}
+ qa('.lgbox>button .fl').forEach(e=>e.textContent=LG[l].f);qa('.lgm').forEach(m=>m.hidden=true);
+ const f=$('slip').files[0];if(f)$('fn').textContent=f.name;note();calc();if($('status').innerHTML&&$('ono').value)checkOrder()}
 function note(){if(R)$('minnote').textContent=`${T[L].per} · ${T[L].border} ${fmt(R.border_rate)} · ${T[L].minnote} ${fmt(R.min_mmk)} ${T[L].min}`}
 function fillMethods(){$('method').innerHTML=M[D].map(m=>`<option>${m}</option>`).join('')}
 function calc(){if(!R)return 0;const a=parseFloat($('amt').value)||0,t=D==='THB_MMK';
@@ -149,13 +162,12 @@ async function checkOrder(){
   ${url?`<small>${t.payout}</small><br><a href="${encodeURI(url)}" target="_blank" rel="noopener"><img src="${encodeURI(url)}" alt=""></a>`:''}</div>`}
 function tab(p){qa('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));$('p1').hidden=p!=='p1';$('p2').hidden=p!=='p2'}
 
-qa('.lang button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
 qa('#tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.p));
 qa('#seg button').forEach(b=>b.onclick=()=>{D=b.dataset.d;qa('#seg button').forEach(x=>x.classList.toggle('on',x===b));fillMethods();calc()});
 $('amt').oninput=calc;$('submit').onclick=submitOrder;$('chk').onclick=checkOrder;
 $('cp').onclick=()=>{navigator.clipboard?.writeText($('payt').textContent);toast('success',T[L].copied)};
 $('slip').onchange=e=>{const f=e.target.files[0];if(f){$('prev').src=URL.createObjectURL(f);$('prev').hidden=false;$('fn').textContent=f.name}};
-fillMethods();setLang(L);load();
+mountLang();fillMethods();setLang(L);load();
 try{const s=localStorage.getItem('lo');if(s){$('ono').value=s;tab('p2');checkOrder()}}catch(e){}
 </script>
 </body>
