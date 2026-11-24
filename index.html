@@ -84,7 +84,7 @@ input:focus,select:focus{outline:0;border-color:var(--p)}
  <div class="row2"><input id="ono" placeholder="TM-XXXXXX" style="text-transform:uppercase"><button class="btn" id="chk" data-t="checkbtn"></button></div>
  <div id="status"></div>
 </section>
-<p class="ver">v10</p>
+<p class="ver">v11</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
@@ -124,7 +124,9 @@ function setLang(l){L=l;try{localStorage.setItem('lang',l)}catch(e){}
  const f=$('slip').files[0];if(f)$('fn').textContent=f.name;const q=$('qr').files[0];if(q)$('qn').textContent=q.name;note();calc();if($('status').innerHTML&&$('ono').value)checkOrder()}
 function note(){if(R)$('minnote').textContent=`${T[L].per} · ${T[L].border} ${fmt(R.border_rate)} · ${T[L].minnote} ${fmt(R.min_mmk)} ${T[L].min}`}
 function fillMethods(){$('method').innerHTML=M[D].map(m=>`<option>${m}</option>`).join('')}
-function showQR(){$('qrimg').src=D==='THB_MMK'?QR.thb:QR.mmk;$('qrw').hidden=false}
+function showQR(){const t=D==='THB_MMK',im=$('qrimg'),p=R&&(t?R.qr_thb:R.qr_mmk),def=t?QR.thb:QR.mmk,
+  s=p?db.storage.from('qr').getPublicUrl(p).data.publicUrl:def;
+ if(im.dataset.s===s)return;im.dataset.s=s;im.onerror=()=>{if(im.src!==def)im.src=def};im.src=s;$('qrw').hidden=false}
 const fwd=a=>D==='THB_MMK'?Math.round(a/R.give_rate*1e5):Math.round(a/1e5*R.take_rate*100)/100;
 const back=g=>D==='THB_MMK'?Math.ceil(+(g*R.give_rate/1e5*100).toFixed(6))/100:Math.ceil(+(g/R.take_rate*1e5).toFixed(6));
 function calc(){showQR();if(!R)return 0;const t=D==='THB_MMK';
