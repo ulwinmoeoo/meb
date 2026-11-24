@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob: https://cegxxtfwphzpxeqsufqr.supabase.co; connect-src https://cegxxtfwphzpxeqsufqr.supabase.co; base-uri 'none'; form-action 'none'">
 <title>ဘတ် ⇄ ကျပ် ငွေလွှဲ</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23f2b705%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-weight=%22800%22>฿K</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +88,7 @@ input:focus,select:focus{outline:0;border-color:var(--p)}
  <div class="row2"><input id="ono" placeholder="TM-XXXXXX" style="text-transform:uppercase"><button class="btn" id="chk" data-t="checkbtn"></button></div>
  <div id="status"></div>
 </section>
-<p class="ver">v13</p>
+<p class="ver">v14</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
@@ -95,7 +96,7 @@ input:focus,select:focus{outline:0;border-color:var(--p)}
 <script>
 const SUPABASE_URL='https://cegxxtfwphzpxeqsufqr.supabase.co';
 const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlZ3h4dGZ3cGh6cHhlcXN1ZnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU0MDI4NDcsImV4cCI6MjExMDk3ODg0N30.xi7bK0WbkkE1AX4l6czbnTozTjvUZTwqixMZ-b6Z0q8';
-const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
 const dark=matchMedia('(prefers-color-scheme:dark)').matches;
 const S=Swal.mixin({confirmButtonColor:'#0b5d55',heightAuto:false,background:dark?'#15221f':'#fff',color:dark?'#e9f3f1':'#14201e'});
 const T={
@@ -178,7 +179,7 @@ async function submitOrder(){
  if(mmk<R.min_mmk)return S.fire({icon:'warning',text:t.minerr.replace('{n}',fmt(R.min_mmk))});
  $('submit').disabled=true;S.fire({title:t.wait,allowOutsideClick:false,showConfirmButton:false,didOpen:()=>Swal.showLoading()});
  try{
-  const no='TM-'+Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b%32]).join('');
+  const no='TM-'+Array.from(crypto.getRandomValues(new Uint8Array(8)),b=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b%32]).join('');
   const b=await cz(f),ext=b.type==='image/png'?'png':b.type==='image/webp'?'webp':'jpg',path=`${no}.${ext}`;
   const up=await db.storage.from('slips').upload(path,b,{contentType:b.type||'image/jpeg'});
   if(up.error)throw new Error('slip: '+up.error.message);
