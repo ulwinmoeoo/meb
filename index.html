@@ -87,7 +87,7 @@ input:focus,select:focus{outline:0;border-color:var(--p)}
  <div class="row2"><input id="ono" placeholder="TM-XXXXXX" style="text-transform:uppercase"><button class="btn" id="chk" data-t="checkbtn"></button></div>
  <div id="status"></div>
 </section>
-<p class="ver">v12</p>
+<p class="ver">v13</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
@@ -99,10 +99,10 @@ const db=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const dark=matchMedia('(prefers-color-scheme:dark)').matches;
 const S=Swal.mixin({confirmButtonColor:'#0b5d55',heightAuto:false,background:dark?'#15221f':'#fff',color:dark?'#e9f3f1':'#14201e'});
 const T={
-my:{title:'ဘတ် ⇄ ကျပ် ငွေလွှဲ',r1:'ဘတ်ပေးရင်',r2:'ဘတ်ပြန်ယူရင်',per:'ကျပ် ၁ သိန်းလျှင် ဘတ်',border:'နယ်စပ်',minnote:'အနည်းဆုံး',min:'ကျပ်',tab1:'ငွေလွှဲမယ်',tab2:'Order စစ်မယ်',amt:'ပေးပို့မယ့် ပမာဏ',get:'သင်ရမယ့်ငွေ',payto:'ဒီအကောင့်ကို အရင်လွှဲပါ',copy:'ကူးယူ',copied:'ကူးပြီးပါပြီ',name:'အမည်',phone:'ဖုန်းနံပါတ်',recv:'ငွေလက်ခံမယ့်နေရာ',acc:'အကောင့်/နံပါတ်',pick:'ငွေလွှဲ slip ဓာတ်ပုံ ရွေးရန်',submit:'Order တင်မယ်',checkbtn:'စစ်မယ်',fill:'အချက်အလက်အားလုံး ဖြည့်ပြီး slip တင်ပါ',ok:'Order တင်ပြီးပါပြီ',keep:'ဒီနံပါတ်ကို မှတ်ထားပါ',pending:'စောင့်ဆိုင်းနေသည်',done:'ပြီးစီးပါပြီ',rejected:'ပယ်ချခံရသည်',nf:'Order မတွေ့ပါ',fail:'မအောင်မြင်ပါ၊ ပြန်ကြိုးစားပါ',minerr:'အနည်းဆုံး ကျပ် {n} ကစပြီး လုပ်ပေးပါမယ်',payout:'ငွေပြန်လွှဲ slip',norate:'Rate မရသေးပါ၊ page ကို refresh လုပ်ပါ',wait:'တင်နေသည်...',s1:'၁။ ငွေလွှဲ slip',s2:'၂။ ငွေလက်ခံမယ့် ဘဏ် QR / အကောင့်',qrpick:'လက်ခံမယ့် ဘဏ် QR ဓာတ်ပုံ ရွေးရန်',needAcc:'လက်ခံမယ့် အကောင့်နံပါတ် (သို့) QR ဓာတ်ပုံ တစ်ခုခု ထည့်ပါ',saveqr:'QR ကို သိမ်းရန်',tapqr:'နှိပ်ရင် ပုံကြီးကြည့်ပြီး သိမ်းလို့ရပါတယ်',upd:'Rate နောက်ဆုံးပြင်ချိန်',old:'၂၄ နာရီကျော်',rulesT:'စည်းမျဉ်းနှင့် ဝန်ဆောင်ခ',rMin:'အနည်းဆုံး ကျပ် {n} ကစပြီး လုပ်ပေးပါမယ်။',rLock:'Order တင်တဲ့အချိန်မှာ မြင်ရတဲ့ Rate အတိုင်း တွက်ပေးပါမယ်။',rHow:'ပေးထားတဲ့ အကောင့်ကို အရင်လွှဲပြီး slip ဓာတ်ပုံနဲ့ လက်ခံမယ့် အကောင့်/QR ကို တင်ပါ။',rTrack:'Order နံပါတ်နဲ့ "Order စစ်မယ်" မှာ အခြေအနေကြည့်ပါ။ ပြီးစီးရင် ငွေပြန်လွှဲ slip ပါ မြင်ရပါမယ်။'},
-en:{title:'THB ⇄ MMK Transfer',r1:'You give THB',r2:'You take THB',per:'THB per MMK 100,000',border:'Border',minnote:'Min',min:'MMK',tab1:'Transfer',tab2:'Check order',amt:'Amount to send',get:'You receive',payto:'Send your money to this account first',copy:'Copy',copied:'Copied',name:'Name',phone:'Phone',recv:'Receive to',acc:'Account / number',pick:'Choose payment slip photo',submit:'Place order',checkbtn:'Check',fill:'Fill in everything and attach the slip',ok:'Order placed',keep:'Keep this number',pending:'Pending',done:'Completed',rejected:'Rejected',nf:'Order not found',fail:'Failed, please try again',minerr:'Minimum is MMK {n}',payout:'Payout slip',norate:'Rates not loaded, please refresh',wait:'Uploading...',s1:'1. Payment slip',s2:'2. Receiving bank QR / account',qrpick:'Choose receiving bank QR photo',needAcc:'Enter the receiving account number or upload its QR',saveqr:'Save QR',tapqr:'Tap to enlarge and save',upd:'Rates updated',old:'over 24h ago',rulesT:'Rules & fees',rMin:'Minimum transfer: MMK {n}.',rLock:'Your order uses the rate shown when you place it.',rHow:'Send money to the account shown, then upload your slip and the receiving account or QR.',rTrack:'Check status with your order number; the payout slip appears there when completed.'},
-th:{title:'โอนเงิน บาท ⇄ จ๊าต',r1:'เมื่อคุณให้บาท',r2:'เมื่อคุณรับบาท',per:'บาทต่อ 100,000 จ๊าต',border:'ชายแดน',minnote:'ขั้นต่ำ',min:'จ๊าต',tab1:'โอนเงิน',tab2:'ตรวจสอบออเดอร์',amt:'จำนวนเงินที่ต้องการโอน',get:'คุณจะได้รับ',payto:'โอนเงินมาที่บัญชีนี้ก่อน',copy:'คัดลอก',copied:'คัดลอกแล้ว',name:'ชื่อ',phone:'เบอร์โทร',recv:'รับเงินที่',acc:'บัญชี / เบอร์',pick:'เลือกรูปสลิปการโอนเงิน',submit:'สั่งโอนเงิน',checkbtn:'ตรวจสอบ',fill:'กรอกข้อมูลให้ครบและแนบสลิป',ok:'สร้างออเดอร์แล้ว',keep:'กรุณาจดหมายเลขนี้ไว้',pending:'รอดำเนินการ',done:'เสร็จสิ้น',rejected:'ถูกปฏิเสธ',nf:'ไม่พบออเดอร์',fail:'ไม่สำเร็จ กรุณาลองใหม่',minerr:'ขั้นต่ำ {n} จ๊าต',payout:'สลิปการโอนคืน',norate:'ยังไม่ได้โหลดเรท กรุณารีเฟรชหน้า',wait:'กำลังอัปโหลด...',s1:'1. สลิปการโอนเงิน',s2:'2. QR / บัญชีที่รับเงิน',qrpick:'เลือกรูป QR บัญชีที่รับเงิน',needAcc:'กรอกเลขบัญชีที่รับเงิน หรืออัปโหลด QR',saveqr:'บันทึก QR',tapqr:'แตะเพื่อขยายและบันทึก',upd:'อัปเดตเรทล่าสุด',old:'เกิน 24 ชม.',rulesT:'กฎและค่าธรรมเนียม',rMin:'ขั้นต่ำ {n} จ๊าต',rLock:'ออเดอร์ใช้เรทที่แสดงตอนสั่งโอน',rHow:'โอนเงินเข้าบัญชีที่แสดง แล้วอัปโหลดสลิปและบัญชี/QR ที่รับเงิน',rTrack:'ตรวจสอบสถานะด้วยเลขออเดอร์ เมื่อเสร็จสิ้นจะเห็นสลิปการโอนคืน'},
-zh:{title:'泰铢 ⇄ 缅币 汇款',r1:'您付泰铢时',r2:'您收泰铢时',per:'每 100,000 缅币对应泰铢',border:'边境',minnote:'最低',min:'缅币',tab1:'汇款',tab2:'查询订单',amt:'汇款金额',get:'您将收到',payto:'请先转账到此账户',copy:'复制',copied:'已复制',name:'姓名',phone:'电话',recv:'收款方式',acc:'账号 / 号码',pick:'选择转账凭证图片',submit:'提交订单',checkbtn:'查询',fill:'请填写全部信息并上传凭证',ok:'订单已提交',keep:'请记住此订单号',pending:'待处理',done:'已完成',rejected:'已拒绝',nf:'未找到订单',fail:'失败，请重试',minerr:'最低 {n} 缅币起',payout:'打款凭证',norate:'汇率未加载，请刷新页面',wait:'上传中...',s1:'1. 转账凭证',s2:'2. 收款银行二维码 / 账号',qrpick:'选择收款银行二维码图片',needAcc:'请填写收款账号或上传二维码',saveqr:'保存二维码',tapqr:'点击放大并保存',upd:'汇率更新于',old:'超过24小时',rulesT:'规则与费用',rMin:'最低汇款金额：{n} 缅币。',rLock:'订单按下单时显示的汇率计算。',rHow:'先转账到所示账户，再上传转账凭证和收款账号/二维码。',rTrack:'用订单号查询状态；完成后可在此查看打款凭证。'}};
+my:{title:'ဘတ် ⇄ ကျပ် ငွေလွှဲ',r1:'ဘတ်ပေးရင်',r2:'ဘတ်ပြန်ယူရင်',per:'ကျပ် ၁ သိန်းလျှင် ဘတ်',border:'နယ်စပ်',minnote:'အနည်းဆုံး',min:'ကျပ်',tab1:'ငွေလွှဲမယ်',tab2:'Order စစ်မယ်',amt:'ပေးပို့မယ့် ပမာဏ',get:'သင်ရမယ့်ငွေ',payto:'ဒီအကောင့်ကို အရင်လွှဲပါ',copy:'ကူးယူ',copied:'ကူးပြီးပါပြီ',name:'အမည်',phone:'ဖုန်းနံပါတ်',recv:'ငွေလက်ခံမယ့်နေရာ',acc:'အကောင့်/နံပါတ်',pick:'ငွေလွှဲ slip ဓာတ်ပုံ ရွေးရန်',submit:'Order တင်မယ်',checkbtn:'စစ်မယ်',fill:'အချက်အလက်အားလုံး ဖြည့်ပြီး slip တင်ပါ',ok:'Order တင်ပြီးပါပြီ',keep:'ဒီနံပါတ်ကို မှတ်ထားပါ',pending:'စောင့်ဆိုင်းနေသည်',done:'ပြီးစီးပါပြီ',rejected:'ပယ်ချခံရသည်',nf:'Order မတွေ့ပါ',fail:'မအောင်မြင်ပါ၊ ပြန်ကြိုးစားပါ',minerr:'အနည်းဆုံး ကျပ် {n} ကစပြီး လုပ်ပေးပါမယ်',payout:'ငွေပြန်လွှဲ slip',norate:'Rate မရသေးပါ၊ page ကို refresh လုပ်ပါ',wait:'တင်နေသည်...',s1:'၁။ ငွေလွှဲ slip',s2:'၂။ ငွေလက်ခံမယ့် ဘဏ် QR / အကောင့်',qrpick:'လက်ခံမယ့် ဘဏ် QR ဓာတ်ပုံ ရွေးရန်',needAcc:'လက်ခံမယ့် အကောင့်နံပါတ် (သို့) QR ဓာတ်ပုံ တစ်ခုခု ထည့်ပါ',saveqr:'QR ကို သိမ်းရန်',tapqr:'နှိပ်ရင် ပုံကြီးကြည့်ပြီး သိမ်းလို့ရပါတယ်',upd:'Rate နောက်ဆုံးပြင်ချိန်',old:'၂၄ နာရီကျော်',rulesT:'စည်းမျဉ်းနှင့် ဝန်ဆောင်ခ',rMin:'အနည်းဆုံး ကျပ် {n} ကစပြီး လုပ်ပေးပါမယ်။',rLock:'Order တင်တဲ့အချိန်မှာ မြင်ရတဲ့ Rate အတိုင်း တွက်ပေးပါမယ်။',rHow:'ပေးထားတဲ့ အကောင့်ကို အရင်လွှဲပြီး slip ဓာတ်ပုံနဲ့ လက်ခံမယ့် အကောင့်/QR ကို တင်ပါ။',rTrack:'Order နံပါတ်နဲ့ "Order စစ်မယ်" မှာ အခြေအနေကြည့်ပါ။ ပြီးစီးရင် ငွေပြန်လွှဲ slip ပါ မြင်ရပါမယ်။',badimg:'ဒီပုံဖိုင်ကို ဖွင့်မရပါ။ JPG (သို့) PNG ပုံ ရွေးပါ၊ ဒါမှမဟုတ် screenshot ယူပြီး တင်ပါ'},
+en:{title:'THB ⇄ MMK Transfer',r1:'You give THB',r2:'You take THB',per:'THB per MMK 100,000',border:'Border',minnote:'Min',min:'MMK',tab1:'Transfer',tab2:'Check order',amt:'Amount to send',get:'You receive',payto:'Send your money to this account first',copy:'Copy',copied:'Copied',name:'Name',phone:'Phone',recv:'Receive to',acc:'Account / number',pick:'Choose payment slip photo',submit:'Place order',checkbtn:'Check',fill:'Fill in everything and attach the slip',ok:'Order placed',keep:'Keep this number',pending:'Pending',done:'Completed',rejected:'Rejected',nf:'Order not found',fail:'Failed, please try again',minerr:'Minimum is MMK {n}',payout:'Payout slip',norate:'Rates not loaded, please refresh',wait:'Uploading...',s1:'1. Payment slip',s2:'2. Receiving bank QR / account',qrpick:'Choose receiving bank QR photo',needAcc:'Enter the receiving account number or upload its QR',saveqr:'Save QR',tapqr:'Tap to enlarge and save',upd:'Rates updated',old:'over 24h ago',rulesT:'Rules & fees',rMin:'Minimum transfer: MMK {n}.',rLock:'Your order uses the rate shown when you place it.',rHow:'Send money to the account shown, then upload your slip and the receiving account or QR.',rTrack:'Check status with your order number; the payout slip appears there when completed.',badimg:'This image cannot be read. Choose a JPG or PNG photo, or take a screenshot.'},
+th:{title:'โอนเงิน บาท ⇄ จ๊าต',r1:'เมื่อคุณให้บาท',r2:'เมื่อคุณรับบาท',per:'บาทต่อ 100,000 จ๊าต',border:'ชายแดน',minnote:'ขั้นต่ำ',min:'จ๊าต',tab1:'โอนเงิน',tab2:'ตรวจสอบออเดอร์',amt:'จำนวนเงินที่ต้องการโอน',get:'คุณจะได้รับ',payto:'โอนเงินมาที่บัญชีนี้ก่อน',copy:'คัดลอก',copied:'คัดลอกแล้ว',name:'ชื่อ',phone:'เบอร์โทร',recv:'รับเงินที่',acc:'บัญชี / เบอร์',pick:'เลือกรูปสลิปการโอนเงิน',submit:'สั่งโอนเงิน',checkbtn:'ตรวจสอบ',fill:'กรอกข้อมูลให้ครบและแนบสลิป',ok:'สร้างออเดอร์แล้ว',keep:'กรุณาจดหมายเลขนี้ไว้',pending:'รอดำเนินการ',done:'เสร็จสิ้น',rejected:'ถูกปฏิเสธ',nf:'ไม่พบออเดอร์',fail:'ไม่สำเร็จ กรุณาลองใหม่',minerr:'ขั้นต่ำ {n} จ๊าต',payout:'สลิปการโอนคืน',norate:'ยังไม่ได้โหลดเรท กรุณารีเฟรชหน้า',wait:'กำลังอัปโหลด...',s1:'1. สลิปการโอนเงิน',s2:'2. QR / บัญชีที่รับเงิน',qrpick:'เลือกรูป QR บัญชีที่รับเงิน',needAcc:'กรอกเลขบัญชีที่รับเงิน หรืออัปโหลด QR',saveqr:'บันทึก QR',tapqr:'แตะเพื่อขยายและบันทึก',upd:'อัปเดตเรทล่าสุด',old:'เกิน 24 ชม.',rulesT:'กฎและค่าธรรมเนียม',rMin:'ขั้นต่ำ {n} จ๊าต',rLock:'ออเดอร์ใช้เรทที่แสดงตอนสั่งโอน',rHow:'โอนเงินเข้าบัญชีที่แสดง แล้วอัปโหลดสลิปและบัญชี/QR ที่รับเงิน',rTrack:'ตรวจสอบสถานะด้วยเลขออเดอร์ เมื่อเสร็จสิ้นจะเห็นสลิปการโอนคืน',badimg:'ไม่สามารถอ่านไฟล์ภาพนี้ได้ กรุณาเลือกภาพ JPG หรือ PNG หรือแคปหน้าจอ'},
+zh:{title:'泰铢 ⇄ 缅币 汇款',r1:'您付泰铢时',r2:'您收泰铢时',per:'每 100,000 缅币对应泰铢',border:'边境',minnote:'最低',min:'缅币',tab1:'汇款',tab2:'查询订单',amt:'汇款金额',get:'您将收到',payto:'请先转账到此账户',copy:'复制',copied:'已复制',name:'姓名',phone:'电话',recv:'收款方式',acc:'账号 / 号码',pick:'选择转账凭证图片',submit:'提交订单',checkbtn:'查询',fill:'请填写全部信息并上传凭证',ok:'订单已提交',keep:'请记住此订单号',pending:'待处理',done:'已完成',rejected:'已拒绝',nf:'未找到订单',fail:'失败，请重试',minerr:'最低 {n} 缅币起',payout:'打款凭证',norate:'汇率未加载，请刷新页面',wait:'上传中...',s1:'1. 转账凭证',s2:'2. 收款银行二维码 / 账号',qrpick:'选择收款银行二维码图片',needAcc:'请填写收款账号或上传二维码',saveqr:'保存二维码',tapqr:'点击放大并保存',upd:'汇率更新于',old:'超过24小时',rulesT:'规则与费用',rMin:'最低汇款金额：{n} 缅币。',rLock:'订单按下单时显示的汇率计算。',rHow:'先转账到所示账户，再上传转账凭证和收款账号/二维码。',rTrack:'用订单号查询状态；完成后可在此查看打款凭证。',badimg:'无法读取此图片。请选择 JPG 或 PNG 图片，或截图后上传。'}};
 const M={THB_MMK:['KPay','Wave Pay','AYA Pay','Bank'],MMK_THB:['PromptPay','Thai bank account']};
 const LG={my:{f:'🇲🇲',n:'မြန်မာ'},en:{f:'🇬🇧',n:'English'},th:{f:'🇹🇭',n:'ไทย'},zh:{f:'🇨🇳',n:'中文'}};
 let L='my',R=null,D='THB_MMK',SRC='s';try{const s=localStorage.getItem('lang');if(LG[s])L=s}catch(e){}
@@ -124,7 +124,7 @@ function setLang(l){L=l;try{localStorage.setItem('lang',l)}catch(e){}
  document.documentElement.lang=l;qa('[data-t]').forEach(e=>e.textContent=T[l][e.dataset.t]);
  qa('[data-ph]').forEach(e=>e.placeholder=T[l][e.dataset.ph]);
  qa('.lgbox>button .fl').forEach(e=>e.textContent=LG[l].f);qa('.lgm').forEach(m=>m.hidden=true);
- const f=$('slip').files[0];if(f)$('fn').textContent=f.name;const q=$('qr').files[0];if(q)$('qn').textContent=q.name;note();calc();if($('status').innerHTML&&$('ono').value)checkOrder()}
+ lbl('slip','fn');lbl('qr','qn');note();calc();if($('status').innerHTML&&$('ono').value)checkOrder()}
 const LOC={my:'en-GB',en:'en-GB',th:'th-TH',zh:'zh-CN'};
 function note(){if(!R)return;$('minnote').textContent=`${T[L].per} · ${T[L].border} ${fmt(R.border_rate)} · ${T[L].minnote} ${fmt(R.min_mmk)} ${T[L].min}`;info()}
 function info(){const t=T[L],d=R.rate_updated_at||R.updated_at,u=$('upd');
@@ -145,9 +145,28 @@ function calc(){showQR();if(!R)return 0;const t=D==='THB_MMK';
  return fwd(parseFloat($('amt').value)||0)}
 async function load(){const {data}=await db.from('rates').select('*').eq('id',1).single();
  if(data){R=data;$('r1').textContent=fmt(R.give_rate);$('r2').textContent=fmt(R.take_rate);note();calc()}}
-async function compress(f){try{const bm=await createImageBitmap(f),k=Math.min(1,1400/Math.max(bm.width,bm.height)),c=document.createElement('canvas');
- c.width=Math.round(bm.width*k);c.height=Math.round(bm.height*k);c.getContext('2d').drawImage(bm,0,0,c.width,c.height);
- return await new Promise(r=>c.toBlob(b=>r(b||f),'image/jpeg',.82))}catch(e){return f}}
+async function compress(f,o={}){
+ const m0=o.m||2000,q0=o.q||.8,tg=o.t||250*1024;let bm;
+ try{bm=await createImageBitmap(f)}catch(e){
+  try{bm=await new Promise((ok,no)=>{const u=URL.createObjectURL(f),i=new Image();i.onload=()=>{URL.revokeObjectURL(u);ok(i)};i.onerror=()=>no(0);i.src=u})}catch(e2){throw new Error('badimg')}}
+ const w=bm.width||bm.naturalWidth,h=bm.height||bm.naturalHeight;let best=null;
+ for(let m=m0;m>=900;m=Math.round(m*.8)){
+  const k=Math.min(1,m/Math.max(w,h),m/2/Math.min(w,h)),c=document.createElement('canvas');
+  c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));
+  const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(bm,0,0,c.width,c.height);
+  for(let q=q0;q>=.499;q-=.1){
+   const b=await new Promise(r=>c.toBlob(r,'image/jpeg',q));
+   if(b&&(!best||b.size<best.size))best=b;
+   if(b&&b.size<=tg)return /^image\/(jpeg|png|webp)$/.test(f.type)&&f.size<=b.size?f:b;
+  }
+ }
+ if(!best)throw new Error('badimg');
+ return /^image\/(jpeg|png|webp)$/.test(f.type)&&f.size<=best.size?f:best}
+const CZ=new WeakMap(),SZ=new WeakMap(),kb=n=>n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
+const cz=f=>{if(!CZ.has(f))CZ.set(f,compress(f).then(b=>{SZ.set(f,`${kb(f.size)} → ${kb(b.size)}`);return b}));return CZ.get(f)};
+function lbl(i,e){const f=$(i).files[0];if(f)$(e).textContent=f.name+(SZ.has(f)?' · '+SZ.get(f):'')}
+function pick(i,pv,e){const f=$(i).files[0];if(!f)return;$(pv).src=URL.createObjectURL(f);$(pv).hidden=false;lbl(i,e);
+ cz(f).then(()=>lbl(i,e),()=>{S.fire({icon:'error',text:T[L].badimg});$(i).value='';$(pv).hidden=true;$(e).textContent=T[L][e==='fn'?'pick':'qrpick']})}
 
 async function submitOrder(){
  const t=T[L],a=parseFloat($('amt').value),f=$('slip').files[0],v=['name','phone','acc'].map(i=>$(i).value.trim());
@@ -160,11 +179,11 @@ async function submitOrder(){
  $('submit').disabled=true;S.fire({title:t.wait,allowOutsideClick:false,showConfirmButton:false,didOpen:()=>Swal.showLoading()});
  try{
   const no='TM-'+Array.from(crypto.getRandomValues(new Uint8Array(6)),b=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b%32]).join('');
-  const b=await compress(f),ext=b.type==='image/png'?'png':b.type==='image/webp'?'webp':'jpg',path=`${no}.${ext}`;
+  const b=await cz(f),ext=b.type==='image/png'?'png':b.type==='image/webp'?'webp':'jpg',path=`${no}.${ext}`;
   const up=await db.storage.from('slips').upload(path,b,{contentType:b.type||'image/jpeg'});
   if(up.error)throw new Error('slip: '+up.error.message);
   let qp=null;
-  if(q){const qb=await compress(q),qe=qb.type==='image/png'?'png':qb.type==='image/webp'?'webp':'jpg';qp=`${no}-qr.${qe}`;
+  if(q){const qb=await cz(q),qe=qb.type==='image/png'?'png':qb.type==='image/webp'?'webp':'jpg';qp=`${no}-qr.${qe}`;
    const u2=await db.storage.from('slips').upload(qp,qb,{contentType:qb.type||'image/jpeg'});if(u2.error)throw new Error('qr: '+u2.error.message)}
   const {error}=await db.from('orders').insert({order_no:no,direction:D,send_amount:a,receive_amount:calc(),rate:D==='THB_MMK'?R.give_rate:R.take_rate,
    name:v[0],phone:v[1],receive_method:$('method').value,receive_account:v[2],slip_path:path,recv_qr_path:qp});
@@ -173,7 +192,7 @@ async function submitOrder(){
   $('ono').value=no;
   S.fire({icon:'success',title:t.ok,html:`<div class="no">${no}</div><div>${t.keep}</div>`,showDenyButton:true,denyButtonText:t.copy,denyButtonColor:'#6b7c79'})
    .then(r=>{if(r.isDenied){navigator.clipboard?.writeText(no);toast('success',t.copied)}});
- }catch(e){S.fire({icon:'error',title:t.fail,text:e.message})}
+ }catch(e){S.fire({icon:'error',title:t.fail,text:e.message==='badimg'?t.badimg:e.message})}
  finally{$('submit').disabled=false}
 }
 async function checkOrder(){
@@ -195,8 +214,8 @@ $('qrimg').onclick=()=>S.fire({imageUrl:$('qrimg').src,imageAlt:'QR',showConfirm
 const pos=e=>{if(parseFloat(e.target.value)<0)e.target.value=''};
 $('amt').oninput=e=>{pos(e);SRC='s';calc()};$('rcv').oninput=e=>{pos(e);SRC='r';calc()};$('submit').onclick=submitOrder;$('chk').onclick=checkOrder;
 $('cp').onclick=()=>{navigator.clipboard?.writeText($('payt').textContent);toast('success',T[L].copied)};
-$('qr').onchange=e=>{const f=e.target.files[0];if(f){$('qprev').src=URL.createObjectURL(f);$('qprev').hidden=false;$('qn').textContent=f.name}};
-$('slip').onchange=e=>{const f=e.target.files[0];if(f){$('prev').src=URL.createObjectURL(f);$('prev').hidden=false;$('fn').textContent=f.name}};
+$('qr').onchange=()=>pick('qr','qprev','qn');
+$('slip').onchange=()=>pick('slip','prev','fn');
 mountLang();fillMethods();setLang(L);load();
 try{const s=localStorage.getItem('lo');if(s)$('ono').value=s}catch(e){}
 </script>
