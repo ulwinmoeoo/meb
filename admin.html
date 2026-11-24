@@ -68,7 +68,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
 </div></div></div>
 
 <div id="app" class="hide">
- <header class="bar"><div class="brand"><span class="mark">฿K</span><span>Admin <small>v10</small></span></div>
+ <header class="bar"><div class="brand"><span class="mark">฿K</span><span>Admin <small>v11</small></span></div>
   <div class="row"><div class="lgbox"></div><button class="ghost" id="lo" data-i="logout"></button></div></header>
  <nav class="tabs" id="tabs"><button data-p="po" class="on"><span data-i="tabOrders"></span><i id="c_p"></i></button><button data-p="ps" data-i="tabSum"></button><button data-p="pr" data-i="tabRate"></button></nav>
  <main>
@@ -86,7 +86,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
    <div class="two"><div><label data-i="from"></label><input id="d1" type="date"></div><div><label data-i="to"></label><input id="d2" type="date"></div></div>
    <p class="hint" id="sh" style="margin-top:10px"></p>
    <div class="grid" id="sum"></div><div id="days"></div></section>
-  <section id="pr" hidden><p class="hint" data-i="per"></p>
+  <section id="pr" hidden><p class="hint" data-i="per"></p><p class="hint" id="rt_up"></p>
    <div class="grid">
     <div><label data-i="border"></label><input id="r_e" type="number" step="any"></div>
     <div><label data-i="give"></label><input id="r_a" type="number" step="any"></div>
@@ -95,6 +95,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
    </div>
    <label data-i="accTHB"></label><textarea id="r_c" rows="2"></textarea>
    <label data-i="accMMK"></label><textarea id="r_d" rows="2"></textarea>
+   <label data-i="rulesLbl"></label><textarea id="r_g" rows="3"></textarea>
    <label data-i="qrThb"></label>
    <div class="qrrow"><img id="qi_thb" alt="" hidden><small id="qn_thb"></small><label class="ghost" for="qf_thb" data-i="qrUp"></label><input id="qf_thb" type="file" accept="image/*" hidden></div>
    <label data-i="qrMmk"></label>
@@ -127,7 +128,7 @@ minmmk:['အနည်းဆုံး ကျပ်','Minimum MMK','ขั้น�
 sTotal:['Order စုစုပေါင်း','Total orders','ออเดอร์ทั้งหมด','订单总数'],rxTHB:['လက်ခံရ THB','THB received','รับ THB','收到泰铢'],payMMK:['ပေးချေ MMK','MMK paid out','จ่าย MMK','支付缅币'],rxMMK:['လက်ခံရ MMK','MMK received','รับ MMK','收到缅币'],payTHB:['ပေးချေ THB','THB paid out','จ่าย THB','支付泰铢'],
 shNote:['ပြီးစီးပြီးသား order များ','completed orders','ออเดอร์ที่เสร็จสิ้น','已完成订单'],first1000:['(ပထမ ၁၀၀၀ ခုသာ)','(first 1,000 only)','(แสดง 1,000 รายการแรก)','（仅前1000条）'],
 colDate:['ရက်စွဲ','Date','วันที่','日期'],colOrders:['Order','Orders','ออเดอร์','订单'],thbIn:['THB ဝင်','THB in','THB เข้า','泰铢收入'],mmkOut:['MMK ထွက်','MMK out','MMK ออก','缅币支出'],mmkIn:['MMK ဝင်','MMK in','MMK เข้า','缅币收入'],thbOut:['THB ထွက်','THB out','THB ออก','泰铢支出'],
-copy:['ကူး','Copy','คัดลอก','复制'],qrBtn:['လက်ခံမယ့် QR','Receiver QR','QR ผู้รับเงิน','收款二维码'],qrThb:['THB လက်ခံမယ့် QR (customer ဘတ်လွှဲရင် ပြမယ်)','QR for receiving THB (shown when customer sends THB)','QR รับเงินบาท (แสดงเมื่อลูกค้าโอนบาท)','泰铢收款二维码（客户汇泰铢时显示）'],qrMmk:['MMK လက်ခံမယ့် QR (customer ကျပ်လွှဲရင် ပြမယ်)','QR for receiving MMK (shown when customer sends MMK)','QR รับเงินจ๊าต (แสดงเมื่อลูกค้าโอนจ๊าต)','缅币收款二维码（客户汇缅币时显示）'],qrUp:['QR တင်/ပြောင်းရန်','Upload / change QR','อัปโหลด / เปลี่ยน QR','上传 / 更换二维码'],qrDefault:['မူလ QR သုံးနေသည်','Using the default QR','ใช้ QR เริ่มต้น','使用默认二维码'],qrDone:['QR အသစ် တင်ပြီးပါပြီ','QR updated','อัปเดต QR แล้ว','二维码已更新'],copied:['ကူးပြီးပါပြီ','Copied','คัดลอกแล้ว','已复制'],note:['Note','Note','หมายเหตุ','备注'],custSlip:['Customer slip','Customer slip','สลิปลูกค้า','客户转账凭证'],
+copy:['ကူး','Copy','คัดลอก','复制'],qrBtn:['လက်ခံမယ့် QR','Receiver QR','QR ผู้รับเงิน','收款二维码'],rulesLbl:['စည်းမျဉ်း / ဝန်ဆောင်ခ (customer ကို ပြမယ်၊ တစ်လိုင်းကို တစ်ချက်)','Rules / fees (shown to customers, one per line)','กฎ / ค่าธรรมเนียม (แสดงให้ลูกค้า บรรทัดละข้อ)','规则 / 费用（客户可见，每行一条）'],rtUp:['Rate နောက်ဆုံးပြင်ချိန်','Rates last updated','อัปเดตเรทล่าสุด','汇率最后更新'],qrThb:['THB လက်ခံမယ့် QR (customer ဘတ်လွှဲရင် ပြမယ်)','QR for receiving THB (shown when customer sends THB)','QR รับเงินบาท (แสดงเมื่อลูกค้าโอนบาท)','泰铢收款二维码（客户汇泰铢时显示）'],qrMmk:['MMK လက်ခံမယ့် QR (customer ကျပ်လွှဲရင် ပြမယ်)','QR for receiving MMK (shown when customer sends MMK)','QR รับเงินจ๊าต (แสดงเมื่อลูกค้าโอนจ๊าต)','缅币收款二维码（客户汇缅币时显示）'],qrUp:['QR တင်/ပြောင်းရန်','Upload / change QR','อัปโหลด / เปลี่ยน QR','上传 / 更换二维码'],qrDefault:['မူလ QR သုံးနေသည်','Using the default QR','ใช้ QR เริ่มต้น','使用默认二维码'],qrDone:['QR အသစ် တင်ပြီးပါပြီ','QR updated','อัปเดต QR แล้ว','二维码已更新'],copied:['ကူးပြီးပါပြီ','Copied','คัดลอกแล้ว','已复制'],note:['Note','Note','หมายเหตุ','备注'],custSlip:['Customer slip','Customer slip','สลิปลูกค้า','客户转账凭证'],
 complete:['ငွေပြန်လွှဲပြီး slip ပို့မယ်','Paid out — send slip','โอนคืนแล้ว ส่งสลิป','已转账，发送凭证'],rejectBtn:['ပယ်ချ','Reject','ปฏิเสธ','拒绝'],noOrders:['Order မရှိပါ','No orders','ไม่มีออเดอร์','暂无订单'],slipNone:['Slip မတွေ့ပါ','Slip not found','ไม่พบสลิป','未找到凭证'],
 loginFail:['Login မအောင်မြင်ပါ','Login failed','เข้าสู่ระบบไม่สำเร็จ','登录失败'],wrongCode:['Code မှားနေပါသည်','Wrong code','รหัสไม่ถูกต้อง','验证码错误'],
 tfa:['အဆင့်နှစ်ဆင့် အတည်ပြုခြင်း','2-step verification','การยืนยันสองขั้นตอน','两步验证'],tfaSetup:['2-step ဖွင့်ရန်','Set up 2-step verification','ตั้งค่าการยืนยันสองขั้นตอน','设置两步验证'],
@@ -220,12 +221,14 @@ async function loadRates(){
  const {data}=await db.from('rates').select('*').eq('id',1).single();if(!data)return;
  RT=data;showQrPrev(data);
  $('r_a').value=data.give_rate;$('r_b').value=data.take_rate;$('r_e').value=data.border_rate;$('r_f').value=data.min_mmk;
- $('r_c').value=data.pay_thb;$('r_d').value=data.pay_mmk}
+ $('r_c').value=data.pay_thb;$('r_d').value=data.pay_mmk;$('r_g').value=data.rules||''}
 async function saveRates(){
- const {data,error}=await db.from('rates').update({give_rate:+$('r_a').value,take_rate:+$('r_b').value,border_rate:+$('r_e').value,min_mmk:+$('r_f').value,
-  pay_thb:$('r_c').value,pay_mmk:$('r_d').value,updated_at:new Date().toISOString()}).eq('id',1).select();
+ const nv={give_rate:+$('r_a').value,take_rate:+$('r_b').value,border_rate:+$('r_e').value},now=new Date().toISOString();
+ const ch=!RT||nv.give_rate!==Number(RT.give_rate)||nv.take_rate!==Number(RT.take_rate)||nv.border_rate!==Number(RT.border_rate);
+ const {data,error}=await db.from('rates').update({...nv,min_mmk:+$('r_f').value,pay_thb:$('r_c').value,pay_mmk:$('r_d').value,rules:$('r_g').value.trim()||null,
+  updated_at:now,...(ch?{rate_updated_at:now}:{})}).eq('id',1).select();
  if(error||!data||!data.length)return S.fire({icon:'error',title:t('failed'),text:error?error.message:t('noPerm')});
- toast('success',t('saved'))}
+ RT=data[0];showQrPrev(RT);toast('success',t('saved'))}
 
 /* ---------- summary ---------- */
 const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -272,7 +275,7 @@ async function loadOrders(){
    <p class="meta">${esc(o.name)} · <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></p>
    <p class="meta">${esc(o.receive_method)} · <b>${esc(o.receive_account)||'QR'}</b> ${o.receive_account?`<button class="mini" data-a="cp">${t('copy')}</button>`:''}</p>
    ${o.note?`<p class="meta">${t('note')}: ${esc(o.note)}</p>`:''}
-   ${pu?`<div class="pt"><img src="${encodeURI(pu)}" alt="payout slip" data-a="pv"></div>`:''}
+   ${pu?`<div class="pt"><img src="${encodeURI(pu)}" alt="payout slip" data-a="pv" loading="lazy" onerror="this.style.display='none'"></div>`:''}
    <div class="acts"><button class="ghost" data-a="slip">${t('custSlip')}</button>${o.recv_qr_path?`<button class="ghost" data-a="qr">${t('qrBtn')}</button>`:''}
    ${o.status==='pending'?`<button class="btn" data-a="ok">${t('complete')}</button><button class="btn bad" data-a="no">${t('rejectBtn')}</button>`:''}</div>`;
   const on=(k,fn)=>{const e=el.querySelector(`[data-a=${k}]`);if(e)e.onclick=fn};
@@ -305,7 +308,8 @@ async function reject(o){
  await refresh();toast('success',t('rDone'))}
 
 const qrUrl=p=>db.storage.from('qr').getPublicUrl(p).data.publicUrl;
-function showQrPrev(d){['thb','mmk'].forEach(k=>{const p=d['qr_'+k],im=$('qi_'+k);
+function showQrPrev(d){const ru=d.rate_updated_at||d.updated_at;$('rt_up').textContent=ru?t('rtUp')+': '+new Date(ru).toLocaleString(LG[L].loc,{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+ ['thb','mmk'].forEach(k=>{const p=d['qr_'+k],im=$('qi_'+k);im.onerror=()=>{im.hidden=true};
  if(p){im.src=qrUrl(p);im.hidden=false;$('qn_'+k).textContent=''}else{im.hidden=true;$('qn_'+k).textContent=t('qrDefault')}})}
 async function uploadQR(k,f){
  if(!f)return;
