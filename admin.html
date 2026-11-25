@@ -57,6 +57,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
 .pending{background:#fff1cf;color:#7a5200}.done{background:#d3f2e3;color:#0a5c3a}.rejected{background:#fcdcd9;color:#8a1c14}
 .pt img{height:64px;border-radius:8px;border:1px solid var(--line);cursor:pointer;margin-top:6px}
 .qrrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.qrrow img{height:90px;border-radius:8px;border:1px solid var(--line);background:#fff}.qrrow small{color:var(--mut)}.qrrow .ghost{margin:0;color:var(--ink)}
+.dupb{background:#ffe0b8;color:#7a4300}
 .swal2-popup{font-family:var(--f)}.sw{color:var(--mut);margin:6px 0}code{word-break:break-all;font-size:.85rem}
 </style>
 </head>
@@ -69,7 +70,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
 </div></div></div>
 
 <div id="app" class="hide">
- <header class="bar"><div class="brand"><span class="mark">฿K</span><span>Admin <small>v13</small></span></div>
+ <header class="bar"><div class="brand"><span class="mark">฿K</span><span>Admin <small>v14</small></span></div>
   <div class="row"><div class="lgbox"></div><button class="ghost" id="lo" data-i="logout"></button></div></header>
  <nav class="tabs" id="tabs"><button data-p="po" class="on"><span data-i="tabOrders"></span><i id="c_p"></i></button><button data-p="ps" data-i="tabSum"></button><button data-p="pr" data-i="tabRate"></button></nav>
  <main>
@@ -130,7 +131,7 @@ minmmk:['အနည်းဆုံး ကျပ်','Minimum MMK','ขั้น�
 sTotal:['Order စုစုပေါင်း','Total orders','ออเดอร์ทั้งหมด','订单总数'],rxTHB:['လက်ခံရ THB','THB received','รับ THB','收到泰铢'],payMMK:['ပေးချေ MMK','MMK paid out','จ่าย MMK','支付缅币'],rxMMK:['လက်ခံရ MMK','MMK received','รับ MMK','收到缅币'],payTHB:['ပေးချေ THB','THB paid out','จ่าย THB','支付泰铢'],
 shNote:['ပြီးစီးပြီးသား order များ','completed orders','ออเดอร์ที่เสร็จสิ้น','已完成订单'],first1000:['(ပထမ ၁၀၀၀ ခုသာ)','(first 1,000 only)','(แสดง 1,000 รายการแรก)','（仅前1000条）'],
 colDate:['ရက်စွဲ','Date','วันที่','日期'],colOrders:['Order','Orders','ออเดอร์','订单'],thbIn:['THB ဝင်','THB in','THB เข้า','泰铢收入'],mmkOut:['MMK ထွက်','MMK out','MMK ออก','缅币支出'],mmkIn:['MMK ဝင်','MMK in','MMK เข้า','缅币收入'],thbOut:['THB ထွက်','THB out','THB ออก','泰铢支出'],
-copy:['ကူး','Copy','คัดลอก','复制'],qrBtn:['လက်ခံမယ့် QR','Receiver QR','QR ผู้รับเงิน','收款二维码'],rulesLbl:['စည်းမျဉ်း / ဝန်ဆောင်ခ (customer ကို ပြမယ်၊ တစ်လိုင်းကို တစ်ချက်)','Rules / fees (shown to customers, one per line)','กฎ / ค่าธรรมเนียม (แสดงให้ลูกค้า บรรทัดละข้อ)','规则 / 费用（客户可见，每行一条）'],badimg:['ဒီပုံဖိုင်ကို ဖွင့်မရပါ။ JPG (သို့) PNG ပုံ ရွေးပါ၊ ဒါမှမဟုတ် screenshot ယူပြီး တင်ပါ','This image cannot be read. Choose a JPG or PNG photo, or take a screenshot.','ไม่สามารถอ่านไฟล์ภาพนี้ได้ กรุณาเลือกภาพ JPG หรือ PNG หรือแคปหน้าจอ','无法读取此图片。请选择 JPG 或 PNG 图片，或截图后上传。'],rtUp:['Rate နောက်ဆုံးပြင်ချိန်','Rates last updated','อัปเดตเรทล่าสุด','汇率最后更新'],qrThb:['THB လက်ခံမယ့် QR (customer ဘတ်လွှဲရင် ပြမယ်)','QR for receiving THB (shown when customer sends THB)','QR รับเงินบาท (แสดงเมื่อลูกค้าโอนบาท)','泰铢收款二维码（客户汇泰铢时显示）'],qrMmk:['MMK လက်ခံမယ့် QR (customer ကျပ်လွှဲရင် ပြမယ်)','QR for receiving MMK (shown when customer sends MMK)','QR รับเงินจ๊าต (แสดงเมื่อลูกค้าโอนจ๊าต)','缅币收款二维码（客户汇缅币时显示）'],qrUp:['QR တင်/ပြောင်းရန်','Upload / change QR','อัปโหลด / เปลี่ยน QR','上传 / 更换二维码'],qrDefault:['မူလ QR သုံးနေသည်','Using the default QR','ใช้ QR เริ่มต้น','使用默认二维码'],qrDone:['QR အသစ် တင်ပြီးပါပြီ','QR updated','อัปเดต QR แล้ว','二维码已更新'],copied:['ကူးပြီးပါပြီ','Copied','คัดลอกแล้ว','已复制'],note:['Note','Note','หมายเหตุ','备注'],custSlip:['Customer slip','Customer slip','สลิปลูกค้า','客户转账凭证'],
+copy:['ကူး','Copy','คัดลอก','复制'],qrBtn:['လက်ခံမယ့် QR','Receiver QR','QR ผู้รับเงิน','收款二维码'],rulesLbl:['စည်းမျဉ်း / ဝန်ဆောင်ခ (customer ကို ပြမယ်၊ တစ်လိုင်းကို တစ်ချက်)','Rules / fees (shown to customers, one per line)','กฎ / ค่าธรรมเนียม (แสดงให้ลูกค้า บรรทัดละข้อ)','规则 / 费用（客户可见，每行一条）'],badimg:['ဒီပုံဖိုင်ကို ဖွင့်မရပါ။ JPG (သို့) PNG ပုံ ရွေးပါ၊ ဒါမှမဟုတ် screenshot ယူပြီး တင်ပါ','This image cannot be read. Choose a JPG or PNG photo, or take a screenshot.','ไม่สามารถอ่านไฟล์ภาพนี้ได้ กรุณาเลือกภาพ JPG หรือ PNG หรือแคปหน้าจอ','无法读取此图片。请选择 JPG 或 PNG 图片，或截图后上传。'],dupB:['ထပ်နေနိုင်','Possible duplicate','อาจซ้ำ','可能重复'],rtUp:['Rate နောက်ဆုံးပြင်ချိန်','Rates last updated','อัปเดตเรทล่าสุด','汇率最后更新'],qrThb:['THB လက်ခံမယ့် QR (customer ဘတ်လွှဲရင် ပြမယ်)','QR for receiving THB (shown when customer sends THB)','QR รับเงินบาท (แสดงเมื่อลูกค้าโอนบาท)','泰铢收款二维码（客户汇泰铢时显示）'],qrMmk:['MMK လက်ခံမယ့် QR (customer ကျပ်လွှဲရင် ပြမယ်)','QR for receiving MMK (shown when customer sends MMK)','QR รับเงินจ๊าต (แสดงเมื่อลูกค้าโอนจ๊าต)','缅币收款二维码（客户汇缅币时显示）'],qrUp:['QR တင်/ပြောင်းရန်','Upload / change QR','อัปโหลด / เปลี่ยน QR','上传 / 更换二维码'],qrDefault:['မူလ QR သုံးနေသည်','Using the default QR','ใช้ QR เริ่มต้น','使用默认二维码'],qrDone:['QR အသစ် တင်ပြီးပါပြီ','QR updated','อัปเดต QR แล้ว','二维码已更新'],copied:['ကူးပြီးပါပြီ','Copied','คัดลอกแล้ว','已复制'],note:['Note','Note','หมายเหตุ','备注'],custSlip:['Customer slip','Customer slip','สลิปลูกค้า','客户转账凭证'],
 complete:['ငွေပြန်လွှဲပြီး slip ပို့မယ်','Paid out — send slip','โอนคืนแล้ว ส่งสลิป','已转账，发送凭证'],rejectBtn:['ပယ်ချ','Reject','ปฏิเสธ','拒绝'],noOrders:['Order မရှိပါ','No orders','ไม่มีออเดอร์','暂无订单'],slipNone:['Slip မတွေ့ပါ','Slip not found','ไม่พบสลิป','未找到凭证'],
 loginFail:['Login မအောင်မြင်ပါ','Login failed','เข้าสู่ระบบไม่สำเร็จ','登录失败'],wrongCode:['Code မှားနေပါသည်','Wrong code','รหัสไม่ถูกต้อง','验证码错误'],
 tfa:['အဆင့်နှစ်ဆင့် အတည်ပြုခြင်း','2-step verification','การยืนยันสองขั้นตอน','两步验证'],tfaSetup:['2-step ဖွင့်ရန်','Set up 2-step verification','ตั้งค่าการยืนยันสองขั้นตอน','设置两步验证'],
@@ -281,12 +282,14 @@ async function loadOrders(){
  const {data,error}=await q;
  if(error){$('list').textContent=error.message;return}
  $('list').innerHTML=data.length?'':`<p class="hint">${t('noOrders')}</p>`;
+ const ky=o=>[o.phone,o.direction,o.send_amount,o.receive_account].join('|'),ms=o=>new Date(o.created_at).getTime();
+ const isDup=o=>data.some(x=>x.id!==o.id&&ky(x)===ky(o)&&ms(x)<ms(o)&&ms(o)-ms(x)<10*60*1000);
  for(const o of data){
   const [a,b]=o.direction==='THB_MMK'?['THB','MMK']:['MMK','THB'];
   const el=document.createElement('article');el.className='oc';
   const tm=new Date(o.created_at).toLocaleString(LG[L].loc,{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
   const pu=o.payout_slip_path?db.storage.from('payouts').getPublicUrl(o.payout_slip_path).data.publicUrl:'';
-  el.innerHTML=`<div class="oh"><b>${esc(o.order_no)}</b><span class="badge ${o.status}">${t(o.status)}</span><time>${tm}</time></div>
+  el.innerHTML=`<div class="oh"><b>${esc(o.order_no)}</b><span class="badge ${o.status}">${t(o.status)}</span>${isDup(o)?`<span class="badge dupb">${t('dupB')}</span>`:''}<time>${tm}</time></div>
    <div class="flow"><span>${fmt(o.send_amount)} <i>${a}</i></span><em>→</em><span class="rx">${fmt(o.receive_amount)} <i>${b}</i></span></div>
    <p class="meta">${esc(o.name)} · <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></p>
    <p class="meta">${esc(o.receive_method)} · <b>${esc(o.receive_account)||'QR'}</b> ${o.receive_account?`<button class="mini" data-a="cp">${t('copy')}</button>`:''}</p>
