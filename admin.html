@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob: https://cegxxtfwphzpxeqsufqr.supabase.co; connect-src https://cegxxtfwphzpxeqsufqr.supabase.co; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob: https://cegxxtfwphzpxeqsufqr.supabase.co; connect-src https://cegxxtfwphzpxeqsufqr.supabase.co; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="robots" content="noindex">
 <title>Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,6 +58,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
 .pt img{height:64px;border-radius:8px;border:1px solid var(--line);cursor:pointer;margin-top:6px}
 .qrrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.qrrow img{height:90px;border-radius:8px;border:1px solid var(--line);background:#fff}.qrrow small{color:var(--mut)}.qrrow .ghost{margin:0;color:var(--ink)}
 .dupb{background:#ffe0b8;color:#7a4300}
+#bell.on{border-color:var(--p);color:var(--p)}
 .swal2-popup{font-family:var(--f)}.sw{color:var(--mut);margin:6px 0}code{word-break:break-all;font-size:.85rem}
 </style>
 </head>
@@ -70,8 +71,8 @@ input:focus,textarea:focus{outline:0;border-color:var(--p)}
 </div></div></div>
 
 <div id="app" class="hide">
- <header class="bar"><div class="brand"><span class="mark">฿K</span><span>Admin <small>v14</small></span></div>
-  <div class="row"><div class="lgbox"></div><button class="ghost" id="lo" data-i="logout"></button></div></header>
+ <header class="bar"><div class="brand"><span class="mark">฿K</span><span>Admin <small>v15</small></span></div>
+  <div class="row"><button class="ghost" id="bell" type="button">🔕</button><div class="lgbox"></div><button class="ghost" id="lo" data-i="logout"></button></div></header>
  <nav class="tabs" id="tabs"><button data-p="po" class="on"><span data-i="tabOrders"></span><i id="c_p"></i></button><button data-p="ps" data-i="tabSum"></button><button data-p="pr" data-i="tabRate"></button></nav>
  <main>
   <section id="po">
@@ -131,7 +132,7 @@ minmmk:['အနည်းဆုံး ကျပ်','Minimum MMK','ขั้น�
 sTotal:['Order စုစုပေါင်း','Total orders','ออเดอร์ทั้งหมด','订单总数'],rxTHB:['လက်ခံရ THB','THB received','รับ THB','收到泰铢'],payMMK:['ပေးချေ MMK','MMK paid out','จ่าย MMK','支付缅币'],rxMMK:['လက်ခံရ MMK','MMK received','รับ MMK','收到缅币'],payTHB:['ပေးချေ THB','THB paid out','จ่าย THB','支付泰铢'],
 shNote:['ပြီးစီးပြီးသား order များ','completed orders','ออเดอร์ที่เสร็จสิ้น','已完成订单'],first1000:['(ပထမ ၁၀၀၀ ခုသာ)','(first 1,000 only)','(แสดง 1,000 รายการแรก)','（仅前1000条）'],
 colDate:['ရက်စွဲ','Date','วันที่','日期'],colOrders:['Order','Orders','ออเดอร์','订单'],thbIn:['THB ဝင်','THB in','THB เข้า','泰铢收入'],mmkOut:['MMK ထွက်','MMK out','MMK ออก','缅币支出'],mmkIn:['MMK ဝင်','MMK in','MMK เข้า','缅币收入'],thbOut:['THB ထွက်','THB out','THB ออก','泰铢支出'],
-copy:['ကူး','Copy','คัดลอก','复制'],qrBtn:['လက်ခံမယ့် QR','Receiver QR','QR ผู้รับเงิน','收款二维码'],rulesLbl:['စည်းမျဉ်း / ဝန်ဆောင်ခ (customer ကို ပြမယ်၊ တစ်လိုင်းကို တစ်ချက်)','Rules / fees (shown to customers, one per line)','กฎ / ค่าธรรมเนียม (แสดงให้ลูกค้า บรรทัดละข้อ)','规则 / 费用（客户可见，每行一条）'],badimg:['ဒီပုံဖိုင်ကို ဖွင့်မရပါ။ JPG (သို့) PNG ပုံ ရွေးပါ၊ ဒါမှမဟုတ် screenshot ယူပြီး တင်ပါ','This image cannot be read. Choose a JPG or PNG photo, or take a screenshot.','ไม่สามารถอ่านไฟล์ภาพนี้ได้ กรุณาเลือกภาพ JPG หรือ PNG หรือแคปหน้าจอ','无法读取此图片。请选择 JPG 或 PNG 图片，或截图后上传。'],dupB:['ထပ်နေနိုင်','Possible duplicate','อาจซ้ำ','可能重复'],rtUp:['Rate နောက်ဆုံးပြင်ချိန်','Rates last updated','อัปเดตเรทล่าสุด','汇率最后更新'],qrThb:['THB လက်ခံမယ့် QR (customer ဘတ်လွှဲရင် ပြမယ်)','QR for receiving THB (shown when customer sends THB)','QR รับเงินบาท (แสดงเมื่อลูกค้าโอนบาท)','泰铢收款二维码（客户汇泰铢时显示）'],qrMmk:['MMK လက်ခံမယ့် QR (customer ကျပ်လွှဲရင် ပြမယ်)','QR for receiving MMK (shown when customer sends MMK)','QR รับเงินจ๊าต (แสดงเมื่อลูกค้าโอนจ๊าต)','缅币收款二维码（客户汇缅币时显示）'],qrUp:['QR တင်/ပြောင်းရန်','Upload / change QR','อัปโหลด / เปลี่ยน QR','上传 / 更换二维码'],qrDefault:['မူလ QR သုံးနေသည်','Using the default QR','ใช้ QR เริ่มต้น','使用默认二维码'],qrDone:['QR အသစ် တင်ပြီးပါပြီ','QR updated','อัปเดต QR แล้ว','二维码已更新'],copied:['ကူးပြီးပါပြီ','Copied','คัดลอกแล้ว','已复制'],note:['Note','Note','หมายเหตุ','备注'],custSlip:['Customer slip','Customer slip','สลิปลูกค้า','客户转账凭证'],
+copy:['ကူး','Copy','คัดลอก','复制'],qrBtn:['လက်ခံမယ့် QR','Receiver QR','QR ผู้รับเงิน','收款二维码'],rulesLbl:['စည်းမျဉ်း / ဝန်ဆောင်ခ (customer ကို ပြမယ်၊ တစ်လိုင်းကို တစ်ချက်)','Rules / fees (shown to customers, one per line)','กฎ / ค่าธรรมเนียม (แสดงให้ลูกค้า บรรทัดละข้อ)','规则 / 费用（客户可见，每行一条）'],badimg:['ဒီပုံဖိုင်ကို ဖွင့်မရပါ။ JPG (သို့) PNG ပုံ ရွေးပါ၊ ဒါမှမဟုတ် screenshot ယူပြီး တင်ပါ','This image cannot be read. Choose a JPG or PNG photo, or take a screenshot.','ไม่สามารถอ่านไฟล์ภาพนี้ได้ กรุณาเลือกภาพ JPG หรือ PNG หรือแคปหน้าจอ','无法读取此图片。请选择 JPG 或 PNG 图片，或截图后上传。'],dupB:['ထပ်နေနိုင်','Possible duplicate','อาจซ้ำ','可能重复'],shareImg:['မျှဝေ','Share','แชร์','分享'],newOrderT:['Order အသစ်','New order','ออเดอร์ใหม่','新订单'],notifOn:['Noti ဖွင့်ထားပြီ','Notifications on','เปิดการแจ้งเตือนแล้ว','通知已开启'],notifOff:['Noti ပိတ်ထားသည်','Notifications off','ปิดการแจ้งเตือน','通知已关闭'],notifBlocked:['Browser က noti ကို ပိတ်ထားတယ်။ ဆိုက်ဆက်တင်မှာ ခွင့်ပြုပေးပါ','Notifications are blocked. Allow them in your browser site settings.','การแจ้งเตือนถูกบล็อก โปรดอนุญาตในการตั้งค่าเว็บไซต์ของเบราว์เซอร์','通知已被屏蔽，请在浏览器的网站设置中允许'],notifUns:['ဒီ browser မှာ noti မရပါ','This browser does not support notifications','เบราว์เซอร์นี้ไม่รองรับการแจ้งเตือน','此浏览器不支持通知'],notifKeep:['Noti ဖွင့်ထားရင် auto-logout ကို ၄ နာရီအထိ ရှည်ထားပါတယ်။ ဒီ page ကို ဖွင့်ထားရပါမယ်','With notifications on, auto-logout is extended to 4 hours. Keep this page open.','เมื่อเปิดการแจ้งเตือน ระบบจะออกจากระบบอัตโนมัติหลัง 4 ชั่วโมง ต้องเปิดหน้านี้ค้างไว้','开启通知后，自动退出延长至4小时。请保持此页面打开。'],saveImg:['ဓာတ်ပုံ သိမ်းမယ်','Save image','บันทึกรูป','保存图片'],bellOn:['Order အသစ်ဝင်ရင် အသိပေးပါမယ်','You will be notified of new orders','จะแจ้งเตือนเมื่อมีออเดอร์ใหม่','有新订单时将通知您'],bellNote:['ဒီ page ကို ဖွင့်ထားစဉ် (tab နောက်ခံမှာလည်း ရ) အလုပ်လုပ်ပါတယ်','Works while this page is open (a background tab is fine)','ทำงานขณะเปิดหน้านี้ไว้ (แท็บพื้นหลังก็ได้)','页面保持打开时有效（后台标签页也可）'],bellOff:['အသိပေးချက် ပိတ်လိုက်ပါပြီ','Notifications turned off','ปิดการแจ้งเตือนแล้ว','通知已关闭'],bellDenied:['Browser က notification ကို ပိတ်ထားပါတယ်။ Browser ရဲ့ site settings (🔒) မှာ ခွင့်ပြုပေးပါ','Notifications are blocked. Allow them in the browser site settings (the 🔒 icon).','เบราว์เซอร์บล็อกการแจ้งเตือน โปรดอนุญาตในการตั้งค่าเว็บไซต์ (ไอคอน 🔒)','浏览器已阻止通知，请在网站设置（🔒）中允许。'],bellUnsup:['ဒီ browser မှာ notification မရပါ','This browser does not support notifications','เบราว์เซอร์นี้ไม่รองรับการแจ้งเตือน','此浏览器不支持通知'],newOrder:['Order အသစ်','New order','ออเดอร์ใหม่','新订单'],newMany:['Order အသစ် {n} ခု','{n} new orders','ออเดอร์ใหม่ {n} รายการ','{n} 个新订单'],rtUp:['Rate နောက်ဆုံးပြင်ချိန်','Rates last updated','อัปเดตเรทล่าสุด','汇率最后更新'],qrThb:['THB လက်ခံမယ့် QR (customer ဘတ်လွှဲရင် ပြမယ်)','QR for receiving THB (shown when customer sends THB)','QR รับเงินบาท (แสดงเมื่อลูกค้าโอนบาท)','泰铢收款二维码（客户汇泰铢时显示）'],qrMmk:['MMK လက်ခံမယ့် QR (customer ကျပ်လွှဲရင် ပြမယ်)','QR for receiving MMK (shown when customer sends MMK)','QR รับเงินจ๊าต (แสดงเมื่อลูกค้าโอนจ๊าต)','缅币收款二维码（客户汇缅币时显示）'],qrUp:['QR တင်/ပြောင်းရန်','Upload / change QR','อัปโหลด / เปลี่ยน QR','上传 / 更换二维码'],qrDefault:['မူလ QR သုံးနေသည်','Using the default QR','ใช้ QR เริ่มต้น','使用默认二维码'],qrDone:['QR အသစ် တင်ပြီးပါပြီ','QR updated','อัปเดต QR แล้ว','二维码已更新'],copied:['ကူးပြီးပါပြီ','Copied','คัดลอกแล้ว','已复制'],note:['Note','Note','หมายเหตุ','备注'],custSlip:['Customer slip','Customer slip','สลิปลูกค้า','客户转账凭证'],
 complete:['ငွေပြန်လွှဲပြီး slip ပို့မယ်','Paid out — send slip','โอนคืนแล้ว ส่งสลิป','已转账，发送凭证'],rejectBtn:['ပယ်ချ','Reject','ปฏิเสธ','拒绝'],noOrders:['Order မရှိပါ','No orders','ไม่มีออเดอร์','暂无订单'],slipNone:['Slip မတွေ့ပါ','Slip not found','ไม่พบสลิป','未找到凭证'],
 loginFail:['Login မအောင်မြင်ပါ','Login failed','เข้าสู่ระบบไม่สำเร็จ','登录失败'],wrongCode:['Code မှားနေပါသည်','Wrong code','รหัสไม่ถูกต้อง','验证码错误'],
 tfa:['အဆင့်နှစ်ဆင့် အတည်ပြုခြင်း','2-step verification','การยืนยันสองขั้นตอน','两步验证'],tfaSetup:['2-step ဖွင့်ရန်','Set up 2-step verification','ตั้งค่าการยืนยันสองขั้นตอน','设置两步验证'],
@@ -224,14 +225,14 @@ async function enroll(f){
  const html=`<p class="sw">${t('tfaScan')}</p><img id="qr" width="190" height="190" alt="QR"><p class="sw">${t('tfaKey')}<br><code>${esc(data.totp.secret)}</code></p>`;
  return ask(data.id,html,t('tfaSetup'),()=>{$('qr').src=data.totp.qr_code});
 }
-function start(){$('login').classList.add('hide');$('app').classList.remove('hide');bump();loadRates();refresh()}
+function start(){$('login').classList.add('hide');$('app').classList.remove('hide');bump();bellUi();loadRates();refresh();known=null;pollNew();clearInterval(pollT);pollT=setInterval(pollNew,POLL_MS)}
 async function refresh(){await Promise.all([loadOrders(),loadSummary(),loadCounts()])}
 async function loadCounts(){
  const st=['pending','done','rejected'];
  const r=await Promise.all(st.map(x=>db.from('orders').select('id',{count:'exact',head:true}).eq('status',x)));
  const c={};st.forEach((x,i)=>c[x]=r[i].count||0);c.all=c.pending+c.done+c.rejected;
  for(const k in c)$('n_'+k).textContent=c[k];
- $('c_p').textContent=c.pending||''}
+ $('c_p').textContent=c.pending||'';document.title=(c.pending?`(${c.pending}) `:'')+'Admin'}
 
 /* ---------- rates ---------- */
 async function loadRates(){
@@ -271,10 +272,22 @@ async function loadSummary(){
   Object.keys(by).sort().reverse().map(k=>{const a=by[k];return `<tr><td>${k.slice(5)}</td><td>${a.length}</td><td>${fmt(sum(a,'THB_MMK','send_amount'))}</td><td>${fmt(sum(a,'THB_MMK','receive_amount'))}</td><td>${fmt(sum(a,'MMK_THB','send_amount'))}</td><td>${fmt(sum(a,'MMK_THB','receive_amount'))}</td></tr>`}).join('')+'</table></div>'}
 
 /* ---------- orders ---------- */
-async function viewImg(bucket,path){
+async function saveImg(u,name){
+ try{let href=u,ext='jpg';
+  if(u.startsWith('data:'))ext=u.slice(11,u.indexOf(';')).replace('jpeg','jpg');
+  else{const b=await(await fetch(u)).blob();ext=(b.type.split('/')[1]||'jpg').replace('jpeg','jpg');href=URL.createObjectURL(b)}
+  const a=document.createElement('a');a.href=href;a.download=name+'.'+ext;document.body.appendChild(a);a.click();a.remove();
+  if(!u.startsWith('data:'))setTimeout(()=>URL.revokeObjectURL(href),5000);
+ }catch(e){window.open(u,'_blank')}}
+async function shareImg(u,name){
+ try{const b=await(await fetch(u)).blob(),f=new File([b],name+'.'+(b.type.split('/')[1]||'jpg').replace('jpeg','jpg'),{type:b.type});
+  if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:name})}catch(e){}}
+async function viewImg(bucket,path,name){
  const u=bucket==='slips'?(await db.storage.from('slips').createSignedUrl(path,300)).data?.signedUrl:db.storage.from('payouts').getPublicUrl(path).data.publicUrl;
  if(!u)return toast('error',t('slipNone'));
- S.fire({html:'<img id="vi" style="max-width:100%;border-radius:10px" alt="">',didOpen:()=>{$('vi').src=u},showConfirmButton:false,showCloseButton:true})}
+ const r=await S.fire({html:'<img id="vi" style="max-width:100%;border-radius:10px" alt="">',didOpen:()=>{$('vi').src=u},showCloseButton:true,
+  confirmButtonText:'💾 '+t('saveImg'),showDenyButton:!!navigator.canShare,denyButtonText:t('shareImg'),denyButtonColor:'#6b7f7c'});
+ if(r.isConfirmed){await saveImg(u,name||'image');toast('success',t('saved'))}else if(r.isDenied)shareImg(u,name||'image')}
 
 async function loadOrders(){
  let q=db.from('orders').select('*').order('created_at',{ascending:false}).limit(100);
@@ -298,7 +311,7 @@ async function loadOrders(){
    <div class="acts"><button class="ghost" data-a="slip">${t('custSlip')}</button>${o.recv_qr_path?`<button class="ghost" data-a="qr">${t('qrBtn')}</button>`:''}
    ${o.status==='pending'?`<button class="btn" data-a="ok">${t('complete')}</button><button class="btn bad" data-a="no">${t('rejectBtn')}</button>`:''}</div>`;
   const on=(k,fn)=>{const e=el.querySelector(`[data-a=${k}]`);if(e)e.onclick=fn};
-  on('cp',()=>copy(o.receive_account));on('slip',()=>viewImg('slips',o.slip_path));on('qr',()=>viewImg('slips',o.recv_qr_path));on('pv',()=>viewImg('payouts',o.payout_slip_path));
+  on('cp',()=>copy(o.receive_account));on('slip',()=>viewImg('slips',o.slip_path,o.order_no+'-slip'));on('qr',()=>viewImg('slips',o.recv_qr_path,o.order_no+'-receiver-qr'));on('pv',()=>viewImg('payouts',o.payout_slip_path,o.order_no+'-payout'));
   on('ok',()=>complete(o));on('no',()=>reject(o));
   $('list').appendChild(el)}
 }
@@ -351,10 +364,42 @@ async function doLogout(){
  try{Object.keys(localStorage).filter(k=>/^sb-/.test(k)).forEach(k=>localStorage.removeItem(k));sessionStorage.clear()}catch(e){}
  ['list','sum','days'].forEach(i=>{$(i).innerHTML=''});
  location.replace(location.pathname)}
-function bump(){clearTimeout(idleT);if(!$('app').classList.contains('hide'))idleT=setTimeout(doLogout,IDLE_MS)}
+function bump(){clearTimeout(idleT);if(!$('app').classList.contains('hide'))idleT=setTimeout(doLogout,nOn()?4*3600e3:IDLE_MS)}
 ['click','keydown','touchstart','scroll'].forEach(e=>addEventListener(e,bump,{passive:true}));
 addEventListener('pageshow',e=>{if(e.persisted)location.reload()});
 db.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT'&&!$('app').classList.contains('hide'))location.replace(location.pathname)});
+/* ---------- browser notifications (Order အသစ်ဝင်ရင်) ---------- */
+const NK='anotif',POLL_MS=window.__POLL_MS||15000;let known=null,pollT=null;
+const nOn=()=>{try{return nSupported()&&localStorage.getItem(NK)==='1'&&Notification.permission==='granted'}catch(e){return false}};
+const nSupported=()=>'Notification' in window&&'serviceWorker' in navigator;
+async function swReg(){try{return await navigator.serviceWorker.getRegistration()||await navigator.serviceWorker.register('sw.js')}catch(e){return null}}
+async function notify(title,body,tag){
+ if(!nOn())return;
+ try{if(await swReg()){const r=await navigator.serviceWorker.ready;await r.showNotification(title,{body,tag,renotify:true,vibrate:[200,100,200],data:{url:location.href}});return}}catch(e){}
+ try{new Notification(title,{body,tag})}catch(e){}}
+function bellUi(){const on=nOn();$('bell').textContent=on?'🔔':'🔕';$('bell').classList.toggle('on',on)}
+function beep(){if(!nOn())return;try{const c=new (window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);o.start();o.stop(c.currentTime+.4)}catch(e){}}
+async function toggleBell(){
+ if(!nSupported())return S.fire({icon:'info',text:t('notifUns')});
+ if(nOn()){try{localStorage.setItem(NK,'0')}catch(e){}bellUi();bump();return toast('info',t('notifOff'))}
+ let p=Notification.permission;if(p==='default')p=await Notification.requestPermission();
+ if(p!=='granted')return S.fire({icon:'warning',text:t('notifBlocked')});
+ try{localStorage.setItem(NK,'1')}catch(e){}await swReg();bellUi();bump();beep();
+ S.fire({icon:'success',title:t('notifOn'),text:t('notifKeep')})}
+async function pollNew(){
+ if($('app').classList.contains('hide'))return;
+ const {data,error}=await db.from('orders').select('id,order_no,direction,send_amount,receive_amount').eq('status','pending').order('created_at',{ascending:false}).limit(50);
+ if(error||!data)return;
+ if(known===null){known=new Set(data.map(o=>o.id));return}
+ const fresh=data.filter(o=>!known.has(o.id));data.forEach(o=>known.add(o.id));
+ if(!fresh.length)return;
+ beep();
+ fresh.slice(0,3).forEach(o=>{const [a,b]=o.direction==='THB_MMK'?['THB','MMK']:['MMK','THB'];
+  notify(t('newOrderT'),`${o.order_no} · ${fmt(o.send_amount)} ${a} → ${fmt(o.receive_amount)} ${b}`,o.id)});
+ if(!document.hidden)toast('info',`${t('newOrderT')}: ${fresh[0].order_no}`);
+ refresh()}
+$('bell').onclick=toggleBell;
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)pollNew()});
 $('lb').onclick=login;$('pw').onkeydown=e=>{if(e.key==='Enter')login()};
 $('lo').onclick=doLogout;
 $('rf').onclick=refresh;$('sv').onclick=saveRates;
